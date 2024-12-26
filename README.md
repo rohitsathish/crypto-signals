@@ -37,3 +37,20 @@ A simple system for generating cryptocurrency trading signals based on technical
 ### Oasis token Price and Signals
 
 ![Oasis Price and Signals](sample_images/oasis_token_sample.png)
+
+# Environment Setup
+
+1. Copy `.env.sample` to `.env`:
+   ```bash
+   cp .env.sample .env
+   ```
+
+2. Fill in your credentials in `.env`:
+   - Get Telegram Bot Token from @BotFather
+   - Get Telegram Chat ID from @userinfobot
+   - Get CoinGecko API Keys from your CoinGecko account
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```

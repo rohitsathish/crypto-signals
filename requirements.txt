@@ -8,3 +8,4 @@ scipy
 session_info
 tqdm
 pyt
+python-dotenv==1.0.0

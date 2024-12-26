@@ -68,3 +68,8 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+
+.env
+cache_directory/
+__pycache__/
+*.pyc

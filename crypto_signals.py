@@ -1,6 +1,9 @@
 # %%
 # --- To Do ---
-# 1. Add logging
+# Add logging
+# You are actually using polyval instead of savgol_filter. Assess next steps.
+
+# %%
 
 # --- Imports ---
 
@@ -18,14 +21,24 @@ from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 from scipy.signal import savgol_filter
 from scipy.signal import find_peaks
 
+# %%
+
+# -- Setup --
+
 pd.options.mode.chained_assignment = None  # default is 'warn'
+load_dotenv()
 
+# %%
 
-# --- Configuration ---
+# -- Global Variables --
+
+# Configuration
+API_KEYS = [os.getenv("CG_API_KEY_1"), os.getenv("CG_API_KEY_2"), os.getenv("CG_API_KEY_3")]
 
 # Token tracking settings
 TRACKED_TOKENS = {
@@ -39,14 +52,14 @@ TRACKED_TOKENS = {
     "ondo-finance": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
 }
 
+# %%
+
 # Telegram Configuration
 
-
-# %%
 class NotificationManager:
     def __init__(self):
-        self.TELEGRAM_BOT_TOKEN = "7772281729:AAHYAmA4z0vNUstylpNX5TUn-cQsSyAeZJI"
-        self.TELEGRAM_CHAT_ID = "1273829009"
+        self.TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+        self.TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
     def get_fear_greed_index(self):
         """Get the fear and greed index and return formatted message"""
@@ -140,8 +153,6 @@ df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
 
 # %%
 cache = dc.Cache("cache_directory")  # This will store the cache in a folder called 'cache_directory'
-
-API_KEYS = ["CG-qxUteJHaiM51BWKnBtvEjx4T", "CG-bip4MXKuvNMUitCdxFXxHh5X", "CG-sKBsqx3LsFzik9j8Nj5hLkUj"]
 
 notifmanager = NotificationManager()
 
@@ -1398,6 +1409,7 @@ main()
 
 # %%
 import pandas as pd
+
 # Load token data
 df = pd.read_csv("saved_data/saved_data/token_data.csv", index_col=0, parse_dates=True)
 df
@@ -1592,3 +1604,20 @@ def validate_state_continuity(df, token):
                 print(f"Warning: ATH price reset to 0 at {idx}")
 
         prev_state = current_state
+
+
+def validate_env_vars():
+    """Validate that all required environment variables are set"""
+    required_vars = ["TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID", "CG_API_KEY_1", "CG_API_KEY_2", "CG_API_KEY_3"]
+
+    missing_vars = [var for var in required_vars if not os.getenv(var)]
+
+    if missing_vars:
+        raise EnvironmentError(
+            f"Missing required environment variables: {', '.join(missing_vars)}\n"
+            "Please check your .env file and ensure all required variables are set."
+        )
+
+
+# Call this at startup
+validate_env_vars()
