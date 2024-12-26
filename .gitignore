@@ -23,6 +23,10 @@ wheels/
 temp/
 .cursorrules
 
+# Specific files
+token_data copy.csv
+token_data1.csv
+
 # Virtual Environment
 venv/
 env/

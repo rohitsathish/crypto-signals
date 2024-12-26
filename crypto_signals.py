@@ -134,7 +134,7 @@ Alt Dominance pct: {stats['alt_dominance_pct']}%"""
             os.unlink(temp_path)
 
 
-df = pd.read_csv("token_data.csv", index_col=0, parse_dates=True)
+df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
 
 # NotificationManager().send_price_alert_with_stats("empyreal", "test", df, send_stats=True, send_fig=True)
 
@@ -232,7 +232,7 @@ def api_rate_limit_call(url, use_cache=True, cg=True, max_retries=5, *args, **kw
 
 # %%
 class CryptoDataManager:
-    def __init__(self, data_file_path="token_data.csv"):
+    def __init__(self, data_file_path="saved_data/token_data.csv"):
         self.data_file_path = data_file_path
         self.main_df = self._load_data()
         self.col_suffixes = [
@@ -457,7 +457,7 @@ def notify_price_alerts(df: pd.DataFrame):
     timeframe_thresholds = {"7d": 0.50, "1d": 0.30, "1h": 0.15}  # ±50% change  # ±30% change  # ±15% change
 
     # Load checkpoints from file if exists
-    checkpoint_file = "price_alert_checkpoints.json"
+    checkpoint_file = "saved_data/price_alert_checkpoints.json"
     if os.path.exists(checkpoint_file):
         with open(checkpoint_file, "r") as f:
             checkpoints = json.load(f)
@@ -545,7 +545,7 @@ def notify_price_alerts(df: pd.DataFrame):
         json.dump(json_checkpoints, f, indent=4)
 
 
-# df = pd.read_csv("token_data.csv", index_col=0, parse_dates=True)
+# df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
 # notify_price_alerts(df)
 
 
@@ -610,7 +610,7 @@ def validate_token_price_nulls(df: pd.DataFrame) -> bool:
                         df = pd.concat([daily_data, after_hourly])
 
                         # Update the original dataframe
-                        df.to_csv("token_data.csv")
+                        df.to_csv("saved_data/token_data.csv")
 
                         notifmanager.send_custom_message(
                             f"Fixed daily/hourly transition for {token}. Hourly data starts from {hourly_start}"
@@ -623,7 +623,7 @@ def validate_token_price_nulls(df: pd.DataFrame) -> bool:
     return True
 
 
-df = pd.read_csv("token_data.csv", index_col=0, parse_dates=True)
+df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
 validate_token_price_nulls(df)
 
 
@@ -1060,17 +1060,17 @@ def plot_portfolio_signals(df: pd.DataFrame, token: str, show_plot: bool = True)
 
 
 # %%
-df = pd.read_csv("token_data.csv", index_col=0, parse_dates=True)
+# df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
 
-for token in TRACKED_TOKENS.keys():
-    plot_portfolio_signals(df, token).show()
+# for token in TRACKED_TOKENS.keys():
+#     plot_portfolio_signals(df, token).show()
 
 # %%
 
 
 # Add new class to manage indicators efficiently
 class IndicatorManager:
-    def __init__(self, data_file="token_data.csv"):
+    def __init__(self, data_file="saved_data/token_data.csv"):
         self.data_file = data_file
         self.main_df = self._load_data()
 
@@ -1368,13 +1368,13 @@ class IndicatorManager:
 
 
 # %%
-# file_path = "token_data.csv"
+# file_path = "saved_data/token_data.csv"
 # data_manager = CryptoDataManager(data_file_path=file_path)
 
 # data_manager.update_multiple_tokens(TRACKED_TOKENS.keys())
 
 
-def main(file_path="token_data.csv"):
+def main(file_path="saved_data/token_data.csv"):
     # Initialize managers
     data_manager = CryptoDataManager(data_file_path=file_path)
 
@@ -1397,15 +1397,20 @@ def main(file_path="token_data.csv"):
 main()
 
 # %%
+import pandas as pd
 # Load token data
-df = pd.read_csv("token_data.csv", index_col=0, parse_dates=True)
+df = pd.read_csv("saved_data/saved_data/token_data.csv", index_col=0, parse_dates=True)
+df
+# %%
+# Load token data
+df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
 
 # Remove last 20 days of data
 cutoff_date = df.index.max() - pd.Timedelta(days=10)
 df = df[df.index <= cutoff_date]
 
 # Save truncated data
-df.to_csv("token_data.csv")
+df.to_csv("saved_data/token_data.csv")
 
 print(f"Saved data up to {cutoff_date}")
 
@@ -1436,13 +1441,13 @@ def clear_smooth_price_columns(df: pd.DataFrame) -> pd.DataFrame:
 
 
 # Load data
-df = pd.read_csv("token_data.csv", index_col=0, parse_dates=True)
+df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
 
 # Clear smooth price columns
 cleaned_df = clear_smooth_price_columns(df)
 
 # Save cleaned data
-cleaned_df.to_csv("token_data.csv")
+cleaned_df.to_csv("saved_data/token_data.csv")
 
 print("Smooth price columns cleared successfully")
 
@@ -1475,7 +1480,7 @@ def clear_non_price_volume_columns(df: pd.DataFrame) -> pd.DataFrame:
 
 def main_clear_columns():
     # Load data
-    df = pd.read_csv("token_data.csv", index_col=0, parse_dates=True)
+    df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
 
     # Clear non-price/volume columns
     cleaned_df = clear_non_price_volume_columns(df)
@@ -1483,7 +1488,7 @@ def main_clear_columns():
     dp(cleaned_df.columns)
 
     # Save cleaned data
-    cleaned_df.to_csv("token_data.csv")
+    cleaned_df.to_csv("saved_data/token_data.csv")
 
     print("Data cleaned and saved successfully")
 
@@ -1514,13 +1519,13 @@ def clear_all_state_columns(df: pd.DataFrame) -> pd.DataFrame:
 
 def main_clear_states():
     # Load data
-    df = pd.read_csv("token_data.csv", index_col=0, parse_dates=True)
+    df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
 
     # Clear state columns
     cleaned_df = clear_all_state_columns(df)
 
     # Save cleaned data
-    cleaned_df.to_csv("token_data.csv")
+    cleaned_df.to_csv("saved_data/token_data.csv")
 
     print("State columns cleared successfully")
 
@@ -1534,7 +1539,7 @@ def update_state_column_names():
     Load state columns, convert ath_count to peak_count in state dictionaries, and save back to file
     """
     # Load data
-    df = pd.read_csv("token_data.csv", index_col=0, parse_dates=True)
+    df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
 
     # Find all state columns
     state_cols = [col for col in df.columns if col.endswith("_state")]
@@ -1558,7 +1563,7 @@ def update_state_column_names():
         )
 
     # Save updated data
-    df.to_csv("token_data.csv")
+    df.to_csv("saved_data/token_data.csv")
     print("State columns updated successfully")
 
 
