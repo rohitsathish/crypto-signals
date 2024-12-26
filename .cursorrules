@@ -1,0 +1,39 @@
+# Crypto Signals Implementation Rules
+
+## Core Data Structure
+- DataFrame index: datetime (sorted, no duplicates)
+- Column pattern: {token}_{indicator}
+- Critical columns per token:
+  * price, total_volume: Raw data (float64)
+  * price_scaled: 0-100 normalized, expanding window (float64)
+  * smooth: Savitzky-Golay filtered (float64)
+  * peaks: -1 (trough), 0, 1 (peak) (float64)
+  * state: Portfolio state dict as string (object)
+
+## Signal Generation Rules
+1. Peak Detection:
+   - Daily: window=12, distance=3
+   - Hourly: window=480, distance=4
+   - Both: polyorder=2, prominence=0.0005 (adaptive)
+   - Minimal lookahead: 1 point
+
+2. Portfolio State:
+   - Keys: portfolio_remaining, last_ath_price, ath_count, ath_triggered, pending_sell
+   - Signals: -1.0 (sell), 1.0 (buy)
+   - Must maintain continuity across updates
+
+## Critical Constraints
+1. No Forward Bias:
+   - Use expanding window for scaling
+   - Only past data for smoothing
+   - Single point lookahead for peaks
+
+2. Frequency Handling:
+   - Process daily/hourly separately
+   - Transition detection automatic
+   - No duplicates at transitions
+
+3. Type Safety:
+   - State column: object dtype
+   - All other columns: float64
+   - Handle NaN explicitly
