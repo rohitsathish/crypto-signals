@@ -1,6 +1,6 @@
 # %%
 # --- To Do ---
-# Add logging
+# Still issues with the price smoothing - look at maple, clearpool
 # You are actually using polyval instead of savgol_filter. Assess next steps.
 
 # %%
@@ -21,7 +21,11 @@ from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 from pathlib import Path
 import os
+
 from dotenv import load_dotenv
+import logging
+from logging.handlers import RotatingFileHandler
+
 
 from scipy.signal import savgol_filter
 from scipy.signal import find_peaks
@@ -31,7 +35,54 @@ from scipy.signal import find_peaks
 # -- Setup --
 
 pd.options.mode.chained_assignment = None  # default is 'warn'
-load_dotenv()
+
+if not load_dotenv(".env"):
+    logging.error(f"Failed to load .env file from")
+    raise RuntimeError(f"Failed to load .env file from")
+logging.info(f"Successfully loaded .env file from")
+
+# %%
+
+# -- Logging --
+
+
+def setup_logging():
+    """Configure the logging system"""
+    # Create logs directory if it doesn't exist
+    log_dir = Path("logs")
+    log_dir.mkdir(exist_ok=True)
+
+    # Create formatter
+    formatter = logging.Formatter(
+        "[%(asctime)s] [%(levelname)s] [%(name)s] [%(funcName)s] - %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
+    )
+
+    # Setup file handler with rotation
+    file_handler = RotatingFileHandler(
+        filename=log_dir / "crypto_signals.log", maxBytes=10 * 1024 * 1024, backupCount=5, encoding="utf-8"  # 10MB
+    )
+    file_handler.setFormatter(formatter)
+
+    # Setup handlers for different components
+    loggers = {
+        "api": logging.getLogger("crypto_signals.api"),
+        "data": logging.getLogger("crypto_signals.data"),
+        "signal": logging.getLogger("crypto_signals.signal"),
+        "notification": logging.getLogger("crypto_signals.notification"),
+        "system": logging.getLogger("crypto_signals.system"),
+    }
+
+    # Configure all loggers
+    for logger in loggers.values():
+        logger.setLevel(logging.INFO)
+        logger.addHandler(file_handler)
+        logger.propagate = False
+
+    return loggers
+
+
+# Initialize loggers
+loggers = setup_logging()
 
 # %%
 
@@ -55,6 +106,7 @@ TRACKED_TOKENS = {
 # %%
 
 # Telegram Configuration
+
 
 class NotificationManager:
     def __init__(self):
@@ -114,43 +166,50 @@ Alt Dominance pct: {stats['alt_dominance_pct']}%"""
         requests.post(url, params=params)
 
     def send_price_alert_with_stats(self, token, message, df, send_stats=True, send_fig=True):
-        # Combine all text messages
-        full_message = message + "\n"
+        logger = loggers["notification"]
 
-        if send_stats:
-            full_message += self.get_stats() + "\n\n"
-            full_message += self.get_fear_greed_index()
+        try:
+            full_message = message + "\n"
+            if send_stats:
+                stats = self.get_stats()
+                fear_greed = self.get_fear_greed_index()
+                full_message += stats + "\n\n" + fear_greed
 
-        # Send combined text message
-        self.send_custom_message(full_message)
+            # Send combined text message
+            self.send_custom_message(full_message)
 
-        if send_fig:
-            # Create plotly figure
-            fig = plot_portfolio_signals(df, token)
+            if send_fig:
+                # Create plotly figure
+                fig = plot_portfolio_signals(df, token)
 
-            # Convert to HTML with full plotly functionality
-            chart_html = fig.to_html(include_plotlyjs="cdn", config={"scrollZoom": True, "displayModeBar": True})
+                # Convert to HTML with full plotly functionality
+                chart_html = fig.to_html(include_plotlyjs="cdn", config={"scrollZoom": True, "displayModeBar": True})
 
-            # Save HTML to temporary file
-            with tempfile.NamedTemporaryFile(mode="w", suffix=".html", delete=False) as f:
-                f.write(chart_html)
-                temp_path = f.name
+                # Save HTML to temporary file
+                with tempfile.NamedTemporaryFile(mode="w", suffix=".html", delete=False) as f:
+                    f.write(chart_html)
+                    temp_path = f.name
 
-            # Send HTML file via Telegram
-            url = f"https://api.telegram.org/bot{self.TELEGRAM_BOT_TOKEN}/sendDocument"
-            with open(temp_path, "rb") as f:
-                files = {"document": f}
-                data = {"chat_id": self.TELEGRAM_CHAT_ID}
-                requests.post(url, files=files, data=data)
+                # Send HTML file via Telegram
+                url = f"https://api.telegram.org/bot{self.TELEGRAM_BOT_TOKEN}/sendDocument"
+                with open(temp_path, "rb") as f:
+                    files = {"document": f}
+                    data = {"chat_id": self.TELEGRAM_CHAT_ID}
+                    requests.post(url, files=files, data=data)
 
+                os.unlink(temp_path)
+
+        except Exception as e:
+            logger.error(f"Failed to send price alert for {token}: {str(e)}", exc_info=True)
             # Clean up temp file
-            os.unlink(temp_path)
 
 
 df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
 
 # NotificationManager().send_price_alert_with_stats("empyreal", "test", df, send_stats=True, send_fig=True)
+# %%
 
+cache.clear()
 # %%
 cache = dc.Cache("cache_directory")  # This will store the cache in a folder called 'cache_directory'
 
@@ -185,6 +244,8 @@ class KeyRotator:
 
 
 def api_rate_limit_call(url, use_cache=True, cg=True, max_retries=5, *args, **kwargs):
+    logger = loggers["api"]
+
     # Return cached response if available
     if use_cache and (cached := cache.get(url)):
         return cached
@@ -225,6 +286,7 @@ def api_rate_limit_call(url, use_cache=True, cg=True, max_retries=5, *args, **kw
 
             except requests.exceptions.RequestException as e:
                 error_msg = f"API request failed with key {key}: {e}"
+                logger.error(error_msg)
                 notifmanager.send_custom_message(error_msg)
                 # For non-rate-limit errors, mark key as limited and try next
 
@@ -233,7 +295,7 @@ def api_rate_limit_call(url, use_cache=True, cg=True, max_retries=5, *args, **kw
         # If all keys are rate limited, wait before retrying
         time.sleep(retry_delay)
         retry_delay *= 1.5  # Exponential backoff
-        print(f"Retrying API call in {retry_delay} seconds")
+        logger.info(f"All keys exhausted. Waiting {retry_delay}s before next attempt")
 
     # After max_retries attempts, raise error
     error_msg = "API request failed after multiple retries due to rate limiting."
@@ -257,6 +319,7 @@ class CryptoDataManager:
             "portfolio_signal",
             "state",
         ]
+        self.logger = loggers["data"]
 
     def _load_data(self):
         """Load existing CSV or create a new DataFrame."""
@@ -277,7 +340,7 @@ class CryptoDataManager:
         needed_cols = [col for token in tokens for col in self.get_token_columns(token)]
         cols_to_remove = [col for col in self.main_df.columns if col not in needed_cols]
         self.main_df.drop(columns=cols_to_remove, inplace=True)
-        dp(f"Removed columns: {cols_to_remove}")
+        self.logger.info(f"Removed columns: {cols_to_remove}")
 
     def check_token_status(self, token):
         """Check if token exists and get the last valid entry."""
@@ -305,14 +368,14 @@ class CryptoDataManager:
         """Load historical data from CSV."""
         file_path = os.path.join("historical data", f"{token}-usd-max.csv")
         if not os.path.exists(file_path):
-            print(f"File {file_path} not found.")
+            self.logger.error(f"File {file_path} not found.")
             return None
 
         df = pd.read_csv(file_path, parse_dates=["snapped_at"], index_col="snapped_at")
         df.index = df.index.tz_localize(None) if df.index.tz else df.index
         df = df.reindex(pd.date_range(start=df.index.min(), end=df.index.max(), freq="D"))
         df = df.interpolate(method="linear")
-        dp("Historical data loaded")
+        self.logger.info("Historical data loaded")
         return df
 
     def fetch_hourly_data(self, token, start_date, end_date=None):
@@ -355,14 +418,14 @@ class CryptoDataManager:
         token_cols = self.get_token_columns(token)
 
         if exists:
-            dp("Previous data detected")
+            self.logger.info(f"Previous data detected for token {token}")
             start_date = min(
                 last_valid_date,
                 pd.Timestamp.utcnow().tz_convert(None).ceil("H") - timedelta(days=3),
             )
             data = self.fetch_hourly_data(token, start_date=start_date)
         else:
-            dp("No previous data detected")
+            self.logger.info(f"No previous data detected for token {token}")
             historical_data = self.load_historical_data(token)
             hourly_data = self.fetch_hourly_data(
                 token,
@@ -371,7 +434,7 @@ class CryptoDataManager:
             data = self._integrate_data(historical_data, hourly_data)
 
         if data is None:
-            dp("No data found in combined historical and hourly data")
+            self.logger.error(f"No data found in combined historical and hourly data for token {token}")
             return False
 
         if self.main_df.empty:
@@ -409,18 +472,18 @@ class CryptoDataManager:
 
         combined = pd.concat([historical_data, hourly_data])
         combined = combined[~combined.index.duplicated(keep="last")].sort_index()
-        dp("combined", combined.head(), combined.tail())
+        self.logger.info(f"Data integrated for token")
         return combined
 
     def update_multiple_tokens(self, tokens):
         """Update multiple tokens at once."""
         self.remove_columns(tokens)
         for token in tokens:
-            print(f"\nProcessing {token}...")
+            self.logger.info(f"\nProcessing {token}...")
             if self.update_token_data(token):
-                print(f"Successfully updated {token}")
+                self.logger.info(f"Successfully updated {token}")
             else:
-                print(f"Failed to update {token}")
+                self.logger.error(f"Failed to update {token}")
 
         self.save_data()
 
@@ -634,8 +697,8 @@ def validate_token_price_nulls(df: pd.DataFrame) -> bool:
     return True
 
 
-df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
-validate_token_price_nulls(df)
+# df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
+# validate_token_price_nulls(df)
 
 
 # %%
@@ -755,6 +818,8 @@ def calculate_portfolio_signals_for_token(
     df: pd.DataFrame, complete_df: pd.DataFrame, token: str, initial_state: dict = None, send_notifications: bool = True
 ):
     """Calculate portfolio signals for a single token with state management"""
+    logger = loggers["signal"]
+
     price_col = f"{token}_price"
     price_scaled_col = f"{token}_price_scaled"
     peak_col = f"{token}_peaks"
@@ -773,6 +838,7 @@ def calculate_portfolio_signals_for_token(
 
     # Initialize or load state with new last_ath_trigger field
     if initial_state is None:
+        logger.debug(f"Initializing new state for token: {token}")
         state = {
             "last_ath_price": 0,
             "last_ath_trigger": 0,  # New field for tracking trigger price
@@ -789,9 +855,9 @@ def calculate_portfolio_signals_for_token(
                 "peak_count": int(initial_state.get("peak_count", 0)),
                 "ath_triggered": bool(initial_state.get("ath_triggered", False)),
             }
-        except (ValueError, TypeError, AttributeError):
-            print(f"Error initializing state for {token}: {e}")
-            # If any conversion fails, start with fresh state
+            logger.debug(f"Loaded existing state for token: {token}")
+        except (ValueError, TypeError, AttributeError) as e:
+            logger.error(f"Error initializing state for {token}: {str(e)}", exc_info=True)
             state = {
                 "last_ath_price": 0,
                 "last_ath_trigger": 0,
@@ -1070,11 +1136,7 @@ def plot_portfolio_signals(df: pd.DataFrame, token: str, show_plot: bool = True)
     return fig
 
 
-# %%
-# df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
 
-# for token in TRACKED_TOKENS.keys():
-#     plot_portfolio_signals(df, token).show()
 
 # %%
 
@@ -1359,23 +1421,22 @@ class IndicatorManager:
 
     def process_new_data(self, df):
         """Process new data efficiently"""
-        # Update indicators
-        start = time.time()
-        self.update_expanding_indicators(df)  # Price scaling
-        print(f"Expanding indicators took {time.time() - start:.2f} seconds")
+        logger = loggers["data"]
 
         start = time.time()
-        self.update_rolling_indicators(df)  # Smooth and peaks
-        print(f"Rolling indicators took {time.time() - start:.2f} seconds")
+        self.update_expanding_indicators(df)
+        logger.info(f"Expanding indicators updated in {time.time() - start:.2f}s")
 
         start = time.time()
-        self.update_portfolio_signals(df)  # Portfolio signals
-        print(f"Portfolio signals took {time.time() - start:.2f} seconds")
+        self.update_rolling_indicators(df)
+        logger.info(f"Rolling indicators updated in {time.time() - start:.2f}s")
 
-        # Save updated data
+        start = time.time()
+        self.update_portfolio_signals(df)
+        logger.info(f"Portfolio signals updated in {time.time() - start:.2f}s")
+
         self.save_data()
-
-        return self.main_df
+        logger.info("Data processing complete and saved")
 
 
 # %%
@@ -1386,26 +1447,39 @@ class IndicatorManager:
 
 
 def main(file_path="saved_data/token_data.csv"):
-    # Initialize managers
-    data_manager = CryptoDataManager(data_file_path=file_path)
+    logger = loggers["system"]
 
-    data_manager.update_multiple_tokens(TRACKED_TOKENS.keys())
+    try:
+        logger.info("Starting crypto signals processing")
 
-    df = pd.read_csv(file_path, index_col=0, parse_dates=True)
+        data_manager = CryptoDataManager(data_file_path=file_path)
+        data_manager.update_multiple_tokens(TRACKED_TOKENS.keys())
+        logger.info("Token data updated")
 
-    # Validate token price nulls
-    validate_token_price_nulls(df)
+        df = pd.read_csv(file_path, index_col=0, parse_dates=True)
 
-    # Notify price alerts
-    notify_price_alerts(df)
+        validate_token_price_nulls(df)
+        logger.info("Token price validation complete")
 
-    indicator_manager = IndicatorManager(data_file=file_path)
+        notify_price_alerts(df)
+        logger.info("Price alerts processed")
 
-    # Process new data
-    indicator_manager.process_new_data(df)
+        indicator_manager = IndicatorManager(data_file=file_path)
+        indicator_manager.process_new_data(df)
+        logger.info("Indicator processing complete")
+
+    except Exception as e:
+        logger.error("Critical error in main process", exc_info=True)
+        raise
 
 
 main()
+
+# %%
+df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
+
+for token in TRACKED_TOKENS.keys():
+    plot_portfolio_signals(df, token).show()
 
 # %%
 import pandas as pd

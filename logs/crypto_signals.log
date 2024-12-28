@@ -1,0 +1,536 @@
+[2024-12-28 17:39:20] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2024-12-28 17:39:20] [ERROR] [crypto_signals.system] [main] - Critical error in main process
+Traceback (most recent call last):
+  File "<ipython-input-42-77bafa6ea664>", line 15, in main
+    data_manager.update_multiple_tokens(TRACKED_TOKENS.keys())
+  File "<ipython-input-31-d2561e5dbb17>", line 177, in update_multiple_tokens
+    if self.update_token_data(token):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<ipython-input-31-d2561e5dbb17>", line 120, in update_token_data
+    data = self.fetch_hourly_data(token, start_date=start_date)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<ipython-input-31-d2561e5dbb17>", line 91, in fetch_hourly_data
+    data = api_rate_limit_call(url)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<ipython-input-30-42fc178d1f7a>", line 44, in api_rate_limit_call
+    key = api_rate_limit_call.rotator.next_key()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'function' object has no attribute 'rotator'
+[2024-12-28 17:44:56] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2024-12-28 17:44:56] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 1/5 - All API keys reset
+[2024-12-28 17:44:58] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...jx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+Traceback (most recent call last):
+  File "<ipython-input-43-b8078e7dc1e3>", line 78, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+[2024-12-28 17:44:59] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Hh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+Traceback (most recent call last):
+  File "<ipython-input-43-b8078e7dc1e3>", line 78, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+[2024-12-28 17:45:00] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...LkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+Traceback (most recent call last):
+  File "<ipython-input-43-b8078e7dc1e3>", line 78, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+[2024-12-28 17:45:00] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 5.1s before next attempt
+[2024-12-28 17:45:05] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 2/5 - All API keys reset
+[2024-12-28 17:45:06] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...jx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+Traceback (most recent call last):
+  File "<ipython-input-43-b8078e7dc1e3>", line 78, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+[2024-12-28 17:45:07] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Hh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+Traceback (most recent call last):
+  File "<ipython-input-43-b8078e7dc1e3>", line 78, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+[2024-12-28 17:45:09] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...LkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+Traceback (most recent call last):
+  File "<ipython-input-43-b8078e7dc1e3>", line 78, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+[2024-12-28 17:45:09] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 7.6s before next attempt
+[2024-12-28 17:45:16] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 3/5 - All API keys reset
+[2024-12-28 17:45:17] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key ending in ...jx4T
+[2024-12-28 17:45:17] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key ending in ...Hh5X
+[2024-12-28 17:45:18] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key ending in ...LkUj
+[2024-12-28 17:45:18] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 11.5s before next attempt
+[2024-12-28 17:48:26] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2024-12-28 17:48:30] [INFO] [crypto_signals.api] [api_rate_limit_call] - Retrying API call in 5.1 seconds
+[2024-12-28 17:48:38] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key: CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 17:48:38] [INFO] [crypto_signals.api] [api_rate_limit_call] - Retrying API call in 7.6499999999999995 seconds
+[2024-12-28 17:48:46] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key: CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 17:48:46] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key: CG-bip4MXKuvNMUitCdxFXxHh5X
+[2024-12-28 17:48:46] [WARNING] [crypto_signals.api] [api_rate_limit_call] - All API keys are rate limited
+[2024-12-28 17:48:46] [INFO] [crypto_signals.api] [api_rate_limit_call] - Retrying API call in 11.475 seconds
+[2024-12-28 17:50:26] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2024-12-28 17:50:26] [WARNING] [crypto_signals.api] [api_rate_limit_call] - All API keys are rate limited
+[2024-12-28 17:50:26] [INFO] [crypto_signals.api] [api_rate_limit_call] - Retrying API call in 5.1 seconds
+[2024-12-28 17:50:32] [WARNING] [crypto_signals.api] [api_rate_limit_call] - All API keys are rate limited
+[2024-12-28 17:50:32] [INFO] [crypto_signals.api] [api_rate_limit_call] - Retrying API call in 7.6499999999999995 seconds
+[2024-12-28 17:50:39] [WARNING] [crypto_signals.api] [api_rate_limit_call] - All API keys are rate limited
+[2024-12-28 17:50:39] [INFO] [crypto_signals.api] [api_rate_limit_call] - Retrying API call in 11.475 seconds
+[2024-12-28 17:50:51] [WARNING] [crypto_signals.api] [api_rate_limit_call] - All API keys are rate limited
+[2024-12-28 17:50:51] [INFO] [crypto_signals.api] [api_rate_limit_call] - Retrying API call in 17.2125 seconds
+[2024-12-28 17:51:08] [WARNING] [crypto_signals.api] [api_rate_limit_call] - All API keys are rate limited
+[2024-12-28 17:51:08] [INFO] [crypto_signals.api] [api_rate_limit_call] - Retrying API call in 25.818749999999998 seconds
+[2024-12-28 17:54:01] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2024-12-28 17:54:01] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 1/5 - All API keys reset
+[2024-12-28 17:54:05] [INFO] [crypto_signals.api] [api_rate_limit_call] - Retrying API call in 5.1 seconds
+[2024-12-28 17:54:10] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 2/5 - All API keys reset
+[2024-12-28 17:54:12] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key: CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 17:54:12] [INFO] [crypto_signals.api] [api_rate_limit_call] - Retrying API call in 7.6499999999999995 seconds
+[2024-12-28 17:54:20] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 3/5 - All API keys reset
+[2024-12-28 17:54:20] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key: CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 17:54:21] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key: CG-bip4MXKuvNMUitCdxFXxHh5X
+[2024-12-28 17:54:21] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key: CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 17:54:21] [INFO] [crypto_signals.api] [api_rate_limit_call] - Retrying API call in 11.475 seconds
+[2024-12-28 17:54:32] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 4/5 - All API keys reset
+[2024-12-28 17:54:33] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key: CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 17:54:33] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key: CG-bip4MXKuvNMUitCdxFXxHh5X
+[2024-12-28 17:54:33] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key: CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 17:54:33] [INFO] [crypto_signals.api] [api_rate_limit_call] - Retrying API call in 17.2125 seconds
+[2024-12-28 17:54:50] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 5/5 - All API keys reset
+[2024-12-28 17:54:51] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key: CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 17:54:51] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key: CG-bip4MXKuvNMUitCdxFXxHh5X
+[2024-12-28 17:54:51] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key: CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 17:54:51] [INFO] [crypto_signals.api] [api_rate_limit_call] - Retrying API call in 25.818749999999998 seconds
+[2024-12-28 18:01:34] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2024-12-28 18:01:35] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 1/5 - All API keys reset
+[2024-12-28 18:01:36] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+Traceback (most recent call last):
+  File "<ipython-input-53-9ce5738462fc>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+[2024-12-28 18:01:37] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...xHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+Traceback (most recent call last):
+  File "<ipython-input-53-9ce5738462fc>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+[2024-12-28 18:01:38] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+Traceback (most recent call last):
+  File "<ipython-input-53-9ce5738462fc>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+[2024-12-28 18:01:43] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 7.6499999999999995s before next attempt
+[2024-12-28 18:01:43] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 2/5 - All API keys reset
+[2024-12-28 18:01:44] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+Traceback (most recent call last):
+  File "<ipython-input-53-9ce5738462fc>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+[2024-12-28 18:01:45] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...xHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+Traceback (most recent call last):
+  File "<ipython-input-53-9ce5738462fc>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+[2024-12-28 18:01:45] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key ending in ...hLkUj
+[2024-12-28 18:02:46] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2024-12-28 18:02:46] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 1/5 - All API keys reset
+[2024-12-28 18:02:47] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+Traceback (most recent call last):
+  File "<ipython-input-53-9ce5738462fc>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+[2024-12-28 18:02:48] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...xHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+Traceback (most recent call last):
+  File "<ipython-input-53-9ce5738462fc>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+[2024-12-28 18:02:49] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+Traceback (most recent call last):
+  File "<ipython-input-53-9ce5738462fc>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+[2024-12-28 18:02:54] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 7.6499999999999995s before next attempt
+[2024-12-28 18:02:54] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 2/5 - All API keys reset
+[2024-12-28 18:02:56] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+Traceback (most recent call last):
+  File "<ipython-input-53-9ce5738462fc>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+[2024-12-28 18:02:57] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...xHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+Traceback (most recent call last):
+  File "<ipython-input-53-9ce5738462fc>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800
+[2024-12-28 18:02:57] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key ending in ...hLkUj
+[2024-12-28 18:03:05] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 11.475s before next attempt
+[2024-12-28 18:03:05] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 3/5 - All API keys reset
+[2024-12-28 18:03:05] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key ending in ...Ejx4T
+[2024-12-28 18:03:05] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key ending in ...xHh5X
+[2024-12-28 18:03:05] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key ending in ...hLkUj
+[2024-12-28 18:03:17] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 17.2125s before next attempt
+[2024-12-28 18:03:17] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 4/5 - All API keys reset
+[2024-12-28 18:03:17] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key ending in ...Ejx4T
+[2024-12-28 18:03:17] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key ending in ...xHh5X
+[2024-12-28 18:03:18] [WARNING] [crypto_signals.api] [api_rate_limit_call] - Rate limit hit for key ending in ...hLkUj
+[2024-12-28 18:10:08] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2024-12-28 18:10:08] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 1/5 - All API keys reset
+[2024-12-28 18:10:09] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+Traceback (most recent call last):
+  File "<ipython-input-58-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 18:10:10] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...xHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+Traceback (most recent call last):
+  File "<ipython-input-58-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2024-12-28 18:10:11] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+Traceback (most recent call last):
+  File "<ipython-input-58-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 18:10:16] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 7.6499999999999995s before next attempt
+[2024-12-28 18:10:16] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 2/5 - All API keys reset
+[2024-12-28 18:10:33] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2024-12-28 18:10:33] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 1/5 - All API keys reset
+[2024-12-28 18:10:34] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+Traceback (most recent call last):
+  File "<ipython-input-58-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 18:10:35] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...xHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+Traceback (most recent call last):
+  File "<ipython-input-58-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2024-12-28 18:10:37] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+Traceback (most recent call last):
+  File "<ipython-input-58-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 18:10:42] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 7.6499999999999995s before next attempt
+[2024-12-28 18:10:42] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 2/5 - All API keys reset
+[2024-12-28 18:10:43] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+Traceback (most recent call last):
+  File "<ipython-input-58-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 18:10:44] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...xHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+Traceback (most recent call last):
+  File "<ipython-input-58-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2024-12-28 18:10:45] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+Traceback (most recent call last):
+  File "<ipython-input-58-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 18:10:53] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 11.475s before next attempt
+[2024-12-28 18:10:53] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 3/5 - All API keys reset
+[2024-12-28 18:10:54] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+Traceback (most recent call last):
+  File "<ipython-input-58-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 18:10:54] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...xHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+Traceback (most recent call last):
+  File "<ipython-input-58-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2024-12-28 18:10:55] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+Traceback (most recent call last):
+  File "<ipython-input-58-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 18:11:49] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2024-12-28 18:11:49] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 1/5 - All API keys reset
+[2024-12-28 18:11:51] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+Traceback (most recent call last):
+  File "<ipython-input-62-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 18:11:51] [INFO] [crypto_signals.api] [api_rate_limit_call] - Successful API call with key ending in ...xHh5X
+[2024-12-28 18:11:51] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 1/5 - All API keys reset
+[2024-12-28 18:11:52] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+Traceback (most recent call last):
+  File "<ipython-input-62-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 18:11:53] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...xHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+Traceback (most recent call last):
+  File "<ipython-input-62-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2024-12-28 18:11:54] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+Traceback (most recent call last):
+  File "<ipython-input-62-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 18:12:00] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 7.6499999999999995s before next attempt
+[2024-12-28 18:12:00] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 2/5 - All API keys reset
+[2024-12-28 18:12:01] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+Traceback (most recent call last):
+  File "<ipython-input-62-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 18:12:02] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...xHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+Traceback (most recent call last):
+  File "<ipython-input-62-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2024-12-28 18:12:03] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+Traceback (most recent call last):
+  File "<ipython-input-62-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 18:12:10] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 11.475s before next attempt
+[2024-12-28 18:12:10] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 3/5 - All API keys reset
+[2024-12-28 18:12:12] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+Traceback (most recent call last):
+  File "<ipython-input-62-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 18:12:12] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...xHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+Traceback (most recent call last):
+  File "<ipython-input-62-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2024-12-28 18:12:13] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+Traceback (most recent call last):
+  File "<ipython-input-62-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 18:12:24] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 17.2125s before next attempt
+[2024-12-28 18:12:24] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 4/5 - All API keys reset
+[2024-12-28 18:12:25] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+Traceback (most recent call last):
+  File "<ipython-input-62-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 18:12:27] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...xHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+Traceback (most recent call last):
+  File "<ipython-input-62-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2024-12-28 18:12:28] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+Traceback (most recent call last):
+  File "<ipython-input-62-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 18:17:57] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2024-12-28 18:17:58] [INFO] [crypto_signals.data] [remove_columns] - Removed columns: []
+[2024-12-28 18:17:58] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing near...
+[2024-12-28 18:17:58] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token near
+[2024-12-28 18:17:58] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 1/5 - All API keys reset
+[2024-12-28 18:17:58] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+Traceback (most recent call last):
+  File "<ipython-input-66-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 18:17:59] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...xHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+Traceback (most recent call last):
+  File "<ipython-input-66-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2024-12-28 18:18:00] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+Traceback (most recent call last):
+  File "<ipython-input-66-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 18:18:06] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 7.6499999999999995s before next attempt
+[2024-12-28 18:18:06] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 2/5 - All API keys reset
+[2024-12-28 18:18:07] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+Traceback (most recent call last):
+  File "<ipython-input-66-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 18:18:07] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...xHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+Traceback (most recent call last):
+  File "<ipython-input-66-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2024-12-28 18:18:08] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+Traceback (most recent call last):
+  File "<ipython-input-66-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 18:18:16] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 11.475s before next attempt
+[2024-12-28 18:18:16] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 3/5 - All API keys reset
+[2024-12-28 18:18:17] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+Traceback (most recent call last):
+  File "<ipython-input-66-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 18:18:18] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...xHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+Traceback (most recent call last):
+  File "<ipython-input-66-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2024-12-28 18:18:19] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+Traceback (most recent call last):
+  File "<ipython-input-66-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 18:18:30] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 17.2125s before next attempt
+[2024-12-28 18:18:30] [INFO] [crypto_signals.api] [api_rate_limit_call] - Attempt 4/5 - All API keys reset
+[2024-12-28 18:18:31] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...Ejx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+Traceback (most recent call last):
+  File "<ipython-input-66-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2024-12-28 18:18:33] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...xHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+Traceback (most recent call last):
+  File "<ipython-input-66-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2024-12-28 18:18:34] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key ending in ...hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+Traceback (most recent call last):
+  File "<ipython-input-66-1172940cb939>", line 74, in api_rate_limit_call
+    response.raise_for_status()
+  File "c:\Users\rohit\anaconda3\envs\crypto_pf\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1735131600&to=1735390800&x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2024-12-28 18:36:21] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2024-12-28 18:36:21] [INFO] [crypto_signals.data] [remove_columns] - Removed columns: []
+[2024-12-28 18:36:21] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing near...
+[2024-12-28 18:36:21] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token near
+[2024-12-28 18:36:22] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated near
+[2024-12-28 18:36:22] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing oasis-network...
+[2024-12-28 18:36:22] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token oasis-network
+[2024-12-28 18:36:24] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated oasis-network
+[2024-12-28 18:36:24] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing ix-swap...
+[2024-12-28 18:36:24] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token ix-swap
+[2024-12-28 18:36:25] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated ix-swap
+[2024-12-28 18:36:25] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing empyreal...
+[2024-12-28 18:36:25] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token empyreal
+[2024-12-28 18:36:26] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated empyreal
+[2024-12-28 18:36:26] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing maple...
+[2024-12-28 18:36:26] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token maple
+[2024-12-28 18:36:27] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated maple
+[2024-12-28 18:36:27] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing clearpool...
+[2024-12-28 18:36:27] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token clearpool
+[2024-12-28 18:36:35] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 7.6499999999999995s before next attempt
+[2024-12-28 18:36:46] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 11.475s before next attempt
+[2024-12-28 18:37:00] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 17.2125s before next attempt
+[2024-12-28 18:37:01] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated clearpool
+[2024-12-28 18:37:01] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing simmi-token...
+[2024-12-28 18:37:01] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token simmi-token
+[2024-12-28 18:37:02] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated simmi-token
+[2024-12-28 18:37:02] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing ondo-finance...
+[2024-12-28 18:37:02] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token ondo-finance
+[2024-12-28 18:37:03] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated ondo-finance
+[2024-12-28 18:37:04] [INFO] [crypto_signals.system] [main] - Token data updated
+[2024-12-28 18:37:04] [INFO] [crypto_signals.system] [main] - Token price validation complete
+[2024-12-28 18:37:04] [INFO] [crypto_signals.system] [main] - Price alerts processed
+[2024-12-28 18:37:04] [INFO] [crypto_signals.data] [process_new_data] - Expanding indicators updated in 0.02s
+[2024-12-28 18:37:05] [INFO] [crypto_signals.data] [process_new_data] - Rolling indicators updated in 0.28s
+[2024-12-28 18:37:05] [INFO] [crypto_signals.data] [process_new_data] - Portfolio signals updated in 0.05s
+[2024-12-28 18:37:05] [INFO] [crypto_signals.data] [process_new_data] - Data processing complete and saved
+[2024-12-28 18:37:05] [INFO] [crypto_signals.system] [main] - Indicator processing complete
