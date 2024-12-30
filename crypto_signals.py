@@ -380,6 +380,8 @@ class CryptoDataManager:
 
     def fetch_hourly_data(self, token, start_date, end_date=None):
         """Fetch hourly data for a specified date range with overlapping intervals."""
+        logger = loggers["data"]
+
         end_date = pd.to_datetime(end_date) if end_date else pd.Timestamp.utcnow().tz_convert(None).ceil("H")
         start_date = pd.to_datetime(start_date)
 
@@ -387,24 +389,27 @@ class CryptoDataManager:
         current_start = start_date
         total_days = (end_date - start_date).days
 
-        with tqdm(total=total_days, desc=f"Fetching {token} data") as pbar:
-            while current_start < end_date:
-                current_end = min(current_start + timedelta(days=90), end_date)
-                url = (
-                    f"https://api.coingecko.com/api/v3/coins/{token}/market_chart/range"
-                    f"?vs_currency=usd&from={int(current_start.timestamp())}&to={int(current_end.timestamp())}"
-                )
-                data = api_rate_limit_call(url)
+        logger.info(f"Starting data fetch for {token} from {start_date} to {end_date} ({total_days} days)")
 
-                if data:
-                    temp_df = self._process_api_data(data)
-                    token_df = pd.concat([token_df, temp_df])
+        while current_start < end_date:
+            current_end = min(current_start + timedelta(days=90), end_date)
+            url = (
+                f"https://api.coingecko.com/api/v3/coins/{token}/market_chart/range"
+                f"?vs_currency=usd&from={int(current_start.timestamp())}&to={int(current_end.timestamp())}"
+            )
+            data = api_rate_limit_call(url)
 
-                pbar.update((current_end - current_start).days)
-                current_start = current_end
+            if data:
+                temp_df = self._process_api_data(data)
+                token_df = pd.concat([token_df, temp_df])
+
+            current_start = current_end
 
         if token_df.empty:
+            logger.warning(f"No data retrieved for {token}")
             return None
+
+        logger.info(f"Completed data fetch for {token} ({len(token_df)} days)")
 
         token_df = token_df.sort_index()
         token_df.index = pd.to_datetime(token_df.index).round("H")
