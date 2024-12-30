@@ -13,21 +13,15 @@ import requests
 import pandas as pd
 import json
 from datetime import datetime, timedelta, timezone
-from tqdm import tqdm
 import time
-import diskcache as dc
 from IPython.display import display as dp
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 from pathlib import Path
 import os
-
 from dotenv import load_dotenv
 import logging
 from logging.handlers import RotatingFileHandler
-
-
-from scipy.signal import savgol_filter
 from scipy.signal import find_peaks
 
 # %%
@@ -204,14 +198,13 @@ Alt Dominance pct: {stats['alt_dominance_pct']}%"""
             # Clean up temp file
 
 
-#df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
+# df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
 
 # NotificationManager().send_price_alert_with_stats("empyreal", "test", df, send_stats=True, send_fig=True)
 # %%
 
-#cache.clear()
+# cache.clear()
 # %%
-cache = dc.Cache("cache_directory")  # This will store the cache in a folder called 'cache_directory'
 
 notifmanager = NotificationManager()
 
@@ -244,11 +237,8 @@ class KeyRotator:
 
 
 def api_rate_limit_call(url, use_cache=True, cg=True, max_retries=5, *args, **kwargs):
+    """Make rate-limited API calls with key rotation"""
     logger = loggers["api"]
-
-    # Return cached response if available
-    if use_cache and (cached := cache.get(url)):
-        return cached
 
     # Initialize key rotator if needed
     if not hasattr(api_rate_limit_call, "rotator"):
@@ -273,10 +263,7 @@ def api_rate_limit_call(url, use_cache=True, cg=True, max_retries=5, *args, **kw
                 response = requests.get(final_url, *args, **kwargs, headers=headers)
 
                 if response.status_code == 200:
-                    json_response = response.json()
-                    if use_cache:
-                        cache.set(url, json_response, expire=14 * 24 * 60 * 60)
-                    return json_response
+                    return response.json()
 
                 if response.status_code == 429:  # Rate limit hit
                     api_rate_limit_call.rotator.mark_limited(key)
@@ -289,7 +276,6 @@ def api_rate_limit_call(url, use_cache=True, cg=True, max_retries=5, *args, **kw
                 logger.error(error_msg)
                 notifmanager.send_custom_message(error_msg)
                 # For non-rate-limit errors, mark key as limited and try next
-
                 api_rate_limit_call.rotator.mark_limited(key)
 
         # If all keys are rate limited, wait before retrying
@@ -1141,8 +1127,6 @@ def plot_portfolio_signals(df: pd.DataFrame, token: str, show_plot: bool = True)
     return fig
 
 
-
-
 # %%
 
 
@@ -1182,9 +1166,7 @@ class IndicatorManager:
             expanding_min = price.expanding().min()
 
             price_scaled = np.where(
-                expanding_max != expanding_min,
-                (price - expanding_min) * 100 / (expanding_max - expanding_min),
-                0
+                expanding_max != expanding_min, (price - expanding_min) * 100 / (expanding_max - expanding_min), 0
             )
 
             if f"{token}_price_scaled" not in self.main_df.columns:
@@ -1192,7 +1174,6 @@ class IndicatorManager:
                 self.main_df.insert(price_col_index + 1, f"{token}_price_scaled", price_scaled)
             else:
                 self.main_df[f"{token}_price_scaled"] = price_scaled
-
 
     def _get_frequency_split(self, series):
         """
@@ -1223,8 +1204,7 @@ class IndicatorManager:
 
             smooth_col = f"{token}_smooth"
             last_valid_smooth = (
-                self.main_df[smooth_col].last_valid_index()
-                if smooth_col in self.main_df.columns else None
+                self.main_df[smooth_col].last_valid_index() if smooth_col in self.main_df.columns else None
             )
 
             # Minimum points needed for hourly data (12 daily points * 24 hours)
@@ -1290,7 +1270,6 @@ class IndicatorManager:
             self.main_df.loc[smooth_prices.index, smooth_col] = smooth_prices
             self.main_df.loc[peaks.index, f"{token}_peaks"] = peaks
 
-
     def update_portfolio_signals(self):
         """Update portfolio signals efficiently"""
         tokens = [col.split("_")[0] for col in self.main_df.columns if col.endswith("_price")]
@@ -1300,10 +1279,7 @@ class IndicatorManager:
             state_col = f"{token}_state"
             signal_col = f"{token}_portfolio_signal"
 
-            last_valid = (
-                self.main_df[state_col].last_valid_index()
-                if state_col in self.main_df.columns else None
-            )
+            last_valid = self.main_df[state_col].last_valid_index() if state_col in self.main_df.columns else None
 
             if last_valid is None:
                 start_idx = self.main_df[price_col].first_valid_index()
@@ -1331,7 +1307,7 @@ class IndicatorManager:
                 self.main_df,
                 token,
                 initial_state=initial_state,
-                send_notifications=True
+                send_notifications=True,
             )
 
             # Update signals in self.main_df
@@ -1345,7 +1321,6 @@ class IndicatorManager:
                     self.main_df[state_col] = self.main_df[state_col].astype("object")
 
                 self.main_df.loc[start_idx:, state_col] = signals[state_col]
-
 
     def _calculate_smooth_prices(self, series, window, polyorder=2):
         """
@@ -1457,7 +1432,6 @@ class IndicatorManager:
 
         self.save_data()
         logger.info("Data processing complete and saved")
-
 
 
 # %%
