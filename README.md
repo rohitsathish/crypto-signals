@@ -3,8 +3,8 @@
 A simple system for generating cryptocurrency trading signals based on technical analysis while avoiding forward bias.
 
 1. Gets the price data from the coingecko api. Also gets current market data.
-2. Uses a savitzky-golay filter to smooth the price data and detect peaks and troughs.
-4. Generates buy/sell signals based on ATH (All-Time High) prices, peaks and troughs.
+2. Uses polynomial smoothing to smooth the price data and detect peaks and troughs.
+4. Generates buy/sell signals based on ATH (All-Time High) prices, peaks and troughs using savitzky-golay find_peaks function.
 5. Tracks token prices and major swings in price and alerts.
 6. Important metrics are visualized in Plotly to aid decision making.
 
@@ -14,19 +14,7 @@ A simple system for generating cryptocurrency trading signals based on technical
 2. Data updated every hour.
 3. Proper frequency handling (daily/hourly).
 4. State management for portfolio tracking
-5. Automated notifications via Telegram for:
-6. Key indicators tracked per token:
-   - Raw price and volume
-   - 0-100 normalized price (expanding window)
-   - Savitzky-Golay smoothed price
-   - Peak/trough detection
-   - Portfolio state
-7. Market-wide metrics:
-   - Alt market cap and dominance
-   - Total volume percentiles
-   - Historical rankings
-
-
+5. Automated notifications via Telegram
 
 # Sample Visualization
 
@@ -49,6 +37,11 @@ A simple system for generating cryptocurrency trading signals based on technical
    - Get Telegram Bot Token from @BotFather
    - Get Telegram Chat ID from @userinfobot
    - Get CoinGecko API Keys from your CoinGecko account
+
+3. Add token data
+   - Go to Coingecko's historical price data page and get the entire daily price history. This is for bitcoin - https://www.coingecko.com/en/coins/bitcoin/historical_data?start=1900-12-14&end=2024-12-13
+   - Download and add the file in the historical_data folder.
+   - Update the TRACKED_TOKENS dictionary with the new token data.
 
 3. Install dependencies:
    ```bash

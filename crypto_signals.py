@@ -204,12 +204,12 @@ Alt Dominance pct: {stats['alt_dominance_pct']}%"""
             # Clean up temp file
 
 
-df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
+#df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
 
 # NotificationManager().send_price_alert_with_stats("empyreal", "test", df, send_stats=True, send_fig=True)
 # %%
 
-cache.clear()
+#cache.clear()
 # %%
 cache = dc.Cache("cache_directory")  # This will store the cache in a folder called 'cache_directory'
 
@@ -1159,33 +1159,35 @@ class IndicatorManager:
         """Get indicator column names for a token"""
         return [f"{token}_{suffix}" for suffix in self.indicator_suffixes]
 
-    def update_expanding_indicators(self, df):
+    def update_expanding_indicators(self):
         """Update price scaling using expanding window to avoid forward bias"""
-        tokens = [col.split("_")[0] for col in df.columns if col.endswith("_price")]
+        # 1) Work directly on self.main_df
+        tokens = [col.split("_")[0] for col in self.main_df.columns if col.endswith("_price")]
 
         for token in tokens:
             price_col = f"{token}_price"
-            if price_col not in df.columns:
+            if price_col not in self.main_df.columns:
                 continue
 
-            # Get complete price history
-            price = df[price_col]
+            # 2) Get the price series from self.main_df
+            price = self.main_df[price_col]
 
-            # Use expanding window for min/max to avoid forward bias
+            # Rest of logic unchanged:
             expanding_max = price.expanding().max()
             expanding_min = price.expanding().min()
 
-            # Scale prices between 0-100 using expanding min/max
             price_scaled = np.where(
-                expanding_max != expanding_min, (price - expanding_min) * 100 / (expanding_max - expanding_min), 0
+                expanding_max != expanding_min,
+                (price - expanding_min) * 100 / (expanding_max - expanding_min),
+                0
             )
 
-            # Update scaled prices
             if f"{token}_price_scaled" not in self.main_df.columns:
                 price_col_index = self.main_df.columns.get_loc(f"{token}_price")
                 self.main_df.insert(price_col_index + 1, f"{token}_price_scaled", price_scaled)
             else:
                 self.main_df[f"{token}_price_scaled"] = price_scaled
+
 
     def _get_frequency_split(self, series):
         """
@@ -1205,38 +1207,39 @@ class IndicatorManager:
         first_hourly_idx = hourly_mask.idxmax()
         return first_hourly_idx
 
-    def update_rolling_indicators(self, df):
+    def update_rolling_indicators(self):
         """Update rolling indicators from last valid point for each token"""
-        tokens = [col.split("_")[0] for col in df.columns if col.endswith("_price")]
+        tokens = [col.split("_")[0] for col in self.main_df.columns if col.endswith("_price")]
 
         for token in tokens:
             price_col = f"{token}_price"
-            if price_col not in df.columns:
+            if price_col not in self.main_df.columns:
                 continue
 
-            # Get last valid index for this token's indicators
             smooth_col = f"{token}_smooth"
             last_valid_smooth = (
-                self.main_df[smooth_col].last_valid_index() if smooth_col in self.main_df.columns else None
+                self.main_df[smooth_col].last_valid_index()
+                if smooth_col in self.main_df.columns else None
             )
 
-            # For new tokens or complete recalculation
             # Minimum points needed for hourly data (12 daily points * 24 hours)
             min_points_needed = 12 * 24
 
+            # Determine start index
             if last_valid_smooth is None:
                 # No existing smooth data - start from first valid price
-                start_idx = df[price_col].first_valid_index()
+                start_idx = self.main_df[price_col].first_valid_index()
             else:
-                # Get index position of last valid smooth
-                last_valid_pos = df.index.get_loc(last_valid_smooth)
-                # Calculate start index position, ensuring we don't go before start of data
-                start_pos = max(0, last_valid_pos - min_points_needed)
-                start_idx = df.index[start_pos]
+                # Check if last_valid_smooth is in main_df.index
+                if last_valid_smooth not in self.main_df.index:
+                    start_idx = self.main_df[price_col].first_valid_index()
+                else:
+                    last_valid_pos = self.main_df.index.get_loc(last_valid_smooth)
+                    start_pos = max(0, last_valid_pos - min_points_needed)
+                    start_idx = self.main_df.index[start_pos]
 
-            # Get price series from start point
-            price_series = df.loc[start_idx:, price_col]
-            # print(token, len(price_series), price_series.head(10), price_series.tail(10))
+            # Get price series from self.main_df
+            price_series = self.main_df.loc[start_idx:, price_col]
 
             freq_split = self._get_frequency_split(price_series)
 
@@ -1246,60 +1249,66 @@ class IndicatorManager:
                 smooth_prices = self._calculate_smooth_prices(price_series, window)
                 peaks = self._detect_peaks(smooth_prices, price_series, window)
             else:
-                # Split processing for daily and hourly data
+                # Split daily vs hourly
                 daily_data = price_series[:freq_split]
                 hourly_data = price_series[freq_split:]
 
                 if len(daily_data) < 12 and len(hourly_data) < 12 * 24:
                     continue
 
-                # Process daily data
+                # Daily smoothing
                 if not daily_data.empty:
                     daily_window = 12
                     daily_smooth = self._calculate_smooth_prices(daily_data, daily_window)
                     daily_peaks = self._detect_peaks(daily_smooth, daily_data, daily_window)
                 else:
-                    daily_smooth = pd.Series()
-                    daily_peaks = pd.Series()
+                    daily_smooth = pd.Series(dtype=float)
+                    daily_peaks = pd.Series(dtype=float)
 
-                # Process hourly data
+                # Hourly smoothing
                 if not hourly_data.empty:
-                    hourly_window = daily_window * 24
+                    hourly_window = 12 * 24
                     hourly_smooth = self._calculate_smooth_prices(hourly_data, hourly_window)
                     hourly_peaks = self._detect_peaks(hourly_smooth, hourly_data, hourly_window)
                 else:
-                    hourly_smooth = pd.Series()
-                    hourly_peaks = pd.Series()
+                    hourly_smooth = pd.Series(dtype=float)
+                    hourly_peaks = pd.Series(dtype=float)
 
-                # Combine results, ensuring no duplicate indices
+                # Combine results
                 smooth_prices = pd.concat([daily_smooth, hourly_smooth]).sort_index()
                 smooth_prices = smooth_prices[~smooth_prices.index.duplicated(keep="last")]
 
                 peaks = pd.concat([daily_peaks, hourly_peaks]).sort_index()
                 peaks = peaks[~peaks.index.duplicated(keep="last")]
 
-            # Update indicators, ensuring indices align
-            self.main_df.loc[smooth_prices.index, f"{token}_smooth"] = smooth_prices
+            # Update main_df columns
+            self.main_df.loc[smooth_prices.index, smooth_col] = smooth_prices
             self.main_df.loc[peaks.index, f"{token}_peaks"] = peaks
 
-    def update_portfolio_signals(self, df):
+
+    def update_portfolio_signals(self):
         """Update portfolio signals efficiently"""
-        tokens = [col.split("_")[0] for col in df.columns if col.endswith("_price")]
+        tokens = [col.split("_")[0] for col in self.main_df.columns if col.endswith("_price")]
 
         for token in tokens:
             price_col = f"{token}_price"
             state_col = f"{token}_state"
             signal_col = f"{token}_portfolio_signal"
 
-            # Get last valid signal index
-            last_valid = self.main_df[state_col].last_valid_index() if state_col in self.main_df.columns else None
+            last_valid = (
+                self.main_df[state_col].last_valid_index()
+                if state_col in self.main_df.columns else None
+            )
 
-            # For new tokens or complete recalculation
             if last_valid is None:
-                start_idx = df[price_col].first_valid_index()
+                start_idx = self.main_df[price_col].first_valid_index()
                 initial_state = None
             else:
-                start_idx = max(df[price_col].first_valid_index(), last_valid - pd.Timedelta(days=1))
+                # Example: fallback to 1 day before last valid if needed
+                # Ensure we don't go before the first valid price
+                first_idx = self.main_df[price_col].first_valid_index()
+                fallback_idx = last_valid - pd.Timedelta(days=1)
+                start_idx = max(first_idx, fallback_idx)
                 try:
                     state_value = self.main_df.loc[last_valid, state_col]
                     if state_value is None:
@@ -1313,17 +1322,18 @@ class IndicatorManager:
 
             # Calculate signals from start_idx
             signals = calculate_portfolio_signals_for_token(
-                self.main_df.loc[start_idx:], self.main_df, token, initial_state=initial_state, send_notifications=True
+                self.main_df.loc[start_idx:],  # pass a slice of the unified main_df
+                self.main_df,
+                token,
+                initial_state=initial_state,
+                send_notifications=True
             )
 
-            # Update signals and state separately with correct dtypes
-            # Update portfolio signal (float)
+            # Update signals in self.main_df
             if signal_col in signals.columns:
                 self.main_df.loc[start_idx:, signal_col] = signals[signal_col].astype(float)
 
-            # Update state (object)
             if state_col in signals.columns:
-                # Ensure column is object dtype before assignment
                 if state_col not in self.main_df.columns:
                     self.main_df[state_col] = pd.Series(dtype="object")
                 elif self.main_df[state_col].dtype != "object":
@@ -1331,10 +1341,13 @@ class IndicatorManager:
 
                 self.main_df.loc[start_idx:, state_col] = signals[state_col]
 
+
     def _calculate_smooth_prices(self, series, window, polyorder=2):
         """
-        Calculate smoothed prices using Savitzky-Golay filter
-        Uses same approach as original implementation
+        Calculate smoothed prices using polynomial fitting.
+        For each point, fits a quadratic polynomial to a window of past data pointsand uses the polynomial value at the current point.
+
+        This avoids forward-looking bias by only using past data for smoothing.
         """
 
         values = series.values
@@ -1419,24 +1432,27 @@ class IndicatorManager:
 
         return signals
 
-    def process_new_data(self, df):
+    def process_new_data(self):
         """Process new data efficiently"""
         logger = loggers["data"]
 
+        self.main_df = self._load_data()
+
         start = time.time()
-        self.update_expanding_indicators(df)
+        self.update_expanding_indicators()
         logger.info(f"Expanding indicators updated in {time.time() - start:.2f}s")
 
         start = time.time()
-        self.update_rolling_indicators(df)
+        self.update_rolling_indicators()
         logger.info(f"Rolling indicators updated in {time.time() - start:.2f}s")
 
         start = time.time()
-        self.update_portfolio_signals(df)
+        self.update_portfolio_signals()
         logger.info(f"Portfolio signals updated in {time.time() - start:.2f}s")
 
         self.save_data()
         logger.info("Data processing complete and saved")
+
 
 
 # %%
@@ -1465,7 +1481,7 @@ def main(file_path="saved_data/token_data.csv"):
         logger.info("Price alerts processed")
 
         indicator_manager = IndicatorManager(data_file=file_path)
-        indicator_manager.process_new_data(df)
+        indicator_manager.process_new_data()
         logger.info("Indicator processing complete")
 
     except Exception as e:
@@ -1492,7 +1508,7 @@ df
 df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
 
 # Remove last 20 days of data
-cutoff_date = df.index.max() - pd.Timedelta(days=10)
+cutoff_date = df.index.max() - pd.Timedelta(days=40)
 df = df[df.index <= cutoff_date]
 
 # Save truncated data
