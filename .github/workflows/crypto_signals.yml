@@ -7,7 +7,7 @@ on:
 
 jobs:
   process-signals:
-    runs-on: ubuntu-22.04  # Updated from ubuntu-24.04
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
       issues: write
@@ -66,14 +66,22 @@ jobs:
           chmod -R 777 saved_data historical_data logs
 
           # Create .env file
-          cat > .env << EOL
-CG_API_KEY_1=${CG_API_KEY_1}
-CG_API_KEY_2=${CG_API_KEY_2}
-CG_API_KEY_3=${CG_API_KEY_3}
-TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
-TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
-RUNNING_IN_DOCKER=true
-EOL
+          echo "CG_API_KEY_1=${{ secrets.CG_API_KEY_1 }}" > .env
+          echo "CG_API_KEY_2=${{ secrets.CG_API_KEY_2 }}" >> .env
+          echo "CG_API_KEY_3=${{ secrets.CG_API_KEY_3 }}" >> .env
+          echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
+          echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env
+          echo "RUNNING_IN_DOCKER=true" >> .env
+
+          # Verify secrets
+          if [ -z "${{ secrets.CG_API_KEY_1 }}" ] || \
+            [ -z "${{ secrets.CG_API_KEY_2 }}" ] || \
+            [ -z "${{ secrets.CG_API_KEY_3 }}" ] || \
+            [ -z "${{ secrets.TELEGRAM_BOT_TOKEN }}" ] || \
+            [ -z "${{ secrets.TELEGRAM_CHAT_ID }}" ]; then
+            echo "Error: One or more required secrets are missing"
+            exit 1
+          fi
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
