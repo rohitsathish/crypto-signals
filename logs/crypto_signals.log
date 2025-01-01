@@ -727,3 +727,121 @@ Processing ondo-finance...
 [2024-12-30 16:33:13] [INFO] [crypto_signals.data] [process_new_data] - Portfolio signals updated in 0.05s
 [2024-12-30 16:33:14] [INFO] [crypto_signals.data] [process_new_data] - Data processing complete and saved
 [2024-12-30 16:33:14] [INFO] [crypto_signals.system] [main] - Indicator processing complete
+[2024-12-30 17:11:49] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2024-12-30 17:11:49] [INFO] [crypto_signals.data] [remove_columns] - Removed columns: []
+[2024-12-30 17:11:49] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing near...
+[2024-12-30 17:11:49] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token near
+[2024-12-30 17:11:49] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for near from 2024-12-27 12:00:00 to 2024-12-30 12:00:00 (3 days)
+[2024-12-30 17:11:50] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for near (72 days)
+[2024-12-30 17:11:50] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated near
+[2024-12-30 17:11:50] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing oasis-network...
+[2024-12-30 17:11:50] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token oasis-network
+[2024-12-30 17:11:50] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for oasis-network from 2024-12-27 12:00:00 to 2024-12-30 12:00:00 (3 days)
+[2024-12-30 17:11:51] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for oasis-network (72 days)
+[2024-12-30 17:11:51] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated oasis-network
+[2024-12-30 17:11:51] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing ix-swap...
+[2024-12-30 17:11:51] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token ix-swap
+[2024-12-30 17:11:51] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for ix-swap from 2024-12-27 12:00:00 to 2024-12-30 12:00:00 (3 days)
+[2024-12-30 17:11:52] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for ix-swap (72 days)
+[2024-12-30 17:11:52] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated ix-swap
+[2024-12-30 17:11:52] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing empyreal...
+[2024-12-30 17:11:52] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token empyreal
+[2024-12-30 17:11:52] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for empyreal from 2024-12-27 12:00:00 to 2024-12-30 12:00:00 (3 days)
+[2024-12-30 17:11:53] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for empyreal (72 days)
+[2024-12-30 17:11:53] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated empyreal
+[2024-12-30 17:11:53] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing maple...
+[2024-12-30 17:11:53] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token maple
+[2024-12-30 17:11:53] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for maple from 2024-12-27 12:00:00 to 2024-12-30 12:00:00 (3 days)
+[2024-12-30 17:11:54] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for maple (72 days)
+[2024-12-30 17:11:54] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated maple
+[2024-12-30 17:11:54] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing clearpool...
+[2024-12-30 17:11:54] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token clearpool
+[2024-12-30 17:11:54] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for clearpool from 2024-12-27 12:00:00 to 2024-12-30 12:00:00 (3 days)
+[2024-12-30 17:12:02] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 7.6499999999999995s before next attempt
+[2024-12-30 17:12:03] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for clearpool (72 days)
+[2024-12-30 17:12:03] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated clearpool
+[2024-12-30 17:12:03] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing simmi-token...
+[2024-12-30 17:12:03] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token simmi-token
+[2024-12-30 17:12:03] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for simmi-token from 2024-12-27 12:00:00 to 2024-12-30 12:00:00 (3 days)
+[2024-12-30 17:12:04] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for simmi-token (72 days)
+[2024-12-30 17:12:04] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated simmi-token
+[2024-12-30 17:12:04] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing ondo-finance...
+[2024-12-30 17:12:04] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token ondo-finance
+[2024-12-30 17:12:04] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for ondo-finance from 2024-12-27 12:00:00 to 2024-12-30 12:00:00 (3 days)
+[2024-12-30 17:12:05] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for ondo-finance (72 days)
+[2024-12-30 17:12:05] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated ondo-finance
+[2024-12-30 17:12:05] [INFO] [crypto_signals.system] [main] - Token data updated
+[2024-12-30 17:12:05] [INFO] [crypto_signals.system] [main] - Token price validation complete
+[2024-12-30 17:12:05] [INFO] [crypto_signals.system] [main] - Price alerts processed
+[2024-12-30 17:12:06] [INFO] [crypto_signals.data] [process_new_data] - Expanding indicators updated in 0.02s
+[2024-12-30 17:12:06] [INFO] [crypto_signals.data] [process_new_data] - Rolling indicators updated in 0.21s
+[2024-12-30 17:12:06] [INFO] [crypto_signals.data] [process_new_data] - Portfolio signals updated in 0.04s
+[2024-12-30 17:12:07] [INFO] [crypto_signals.data] [process_new_data] - Data processing complete and saved
+[2024-12-30 17:12:07] [INFO] [crypto_signals.system] [main] - Indicator processing complete
+[2024-12-31 12:59:47] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2024-12-31 12:59:47] [INFO] [crypto_signals.data] [remove_columns] - Removed columns: []
+[2024-12-31 12:59:47] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing near...
+[2024-12-31 12:59:47] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token near
+[2024-12-31 12:59:47] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for near from 2024-12-28 08:00:00 to 2024-12-31 08:00:00 (3 days)
+[2024-12-31 12:59:49] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for near (72 days)
+[2024-12-31 12:59:49] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated near
+[2024-12-31 12:59:49] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing oasis-network...
+[2024-12-31 12:59:49] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token oasis-network
+[2024-12-31 12:59:49] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for oasis-network from 2024-12-28 08:00:00 to 2024-12-31 08:00:00 (3 days)
+[2024-12-31 12:59:50] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for oasis-network (72 days)
+[2024-12-31 12:59:50] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated oasis-network
+[2024-12-31 12:59:50] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing ix-swap...
+[2024-12-31 12:59:50] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token ix-swap
+[2024-12-31 12:59:50] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for ix-swap from 2024-12-28 08:00:00 to 2024-12-31 08:00:00 (3 days)
+[2024-12-31 12:59:50] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for ix-swap (72 days)
+[2024-12-31 12:59:50] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated ix-swap
+[2024-12-31 12:59:50] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing empyreal...
+[2024-12-31 12:59:50] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token empyreal
+[2024-12-31 12:59:50] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for empyreal from 2024-12-28 08:00:00 to 2024-12-31 08:00:00 (3 days)
+[2024-12-31 12:59:51] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for empyreal (72 days)
+[2024-12-31 12:59:51] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated empyreal
+[2024-12-31 12:59:51] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing maple...
+[2024-12-31 12:59:51] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token maple
+[2024-12-31 12:59:51] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for maple from 2024-12-28 08:00:00 to 2024-12-31 08:00:00 (3 days)
+[2024-12-31 12:59:52] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for maple (72 days)
+[2024-12-31 12:59:52] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated maple
+[2024-12-31 12:59:52] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing clearpool...
+[2024-12-31 12:59:52] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token clearpool
+[2024-12-31 12:59:52] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for clearpool from 2024-12-28 08:00:00 to 2024-12-31 08:00:00 (3 days)
+[2024-12-31 13:00:01] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 7.6499999999999995s before next attempt
+[2024-12-31 13:00:02] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for clearpool (72 days)
+[2024-12-31 13:00:02] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated clearpool
+[2024-12-31 13:00:02] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing simmi-token...
+[2024-12-31 13:00:02] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token simmi-token
+[2024-12-31 13:00:02] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for simmi-token from 2024-12-28 08:00:00 to 2024-12-31 08:00:00 (3 days)
+[2024-12-31 13:00:03] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for simmi-token (72 days)
+[2024-12-31 13:00:03] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated simmi-token
+[2024-12-31 13:00:03] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing ondo-finance...
+[2024-12-31 13:00:03] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token ondo-finance
+[2024-12-31 13:00:03] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for ondo-finance from 2024-12-28 08:00:00 to 2024-12-31 08:00:00 (3 days)
+[2024-12-31 13:00:04] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for ondo-finance (72 days)
+[2024-12-31 13:00:04] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated ondo-finance
+[2024-12-31 13:00:05] [INFO] [crypto_signals.system] [main] - Token data updated
+[2024-12-31 13:00:05] [INFO] [crypto_signals.system] [main] - Token price validation complete
+[2024-12-31 13:00:05] [INFO] [crypto_signals.system] [main] - Price alerts processed
+[2024-12-31 13:00:05] [INFO] [crypto_signals.data] [process_new_data] - Expanding indicators updated in 0.02s
+[2024-12-31 13:00:06] [INFO] [crypto_signals.data] [process_new_data] - Rolling indicators updated in 0.22s
+[2024-12-31 13:00:06] [INFO] [crypto_signals.data] [process_new_data] - Portfolio signals updated in 0.05s
+[2024-12-31 13:00:06] [INFO] [crypto_signals.data] [process_new_data] - Data processing complete and saved
+[2024-12-31 13:00:06] [INFO] [crypto_signals.system] [main] - Indicator processing complete

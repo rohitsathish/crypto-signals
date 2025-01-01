@@ -1,7 +1,5 @@
 # %%
 # --- To Do ---
-# Still issues with the price smoothing - look at maple, clearpool
-# You are actually using polyval instead of savgol_filter. Assess next steps.
 
 # %%
 
@@ -23,12 +21,68 @@ from dotenv import load_dotenv
 import logging
 from logging.handlers import RotatingFileHandler
 from scipy.signal import find_peaks
+import modal
+
+# %%
+
+# -- Modal Setup --
+
+MODAL_DATA_DIR = "/root/saved_data"
+MODAL_HISTORICAL_DIR = "/root/historical_data"
+MODAL_LOGS_DIR = "/root/logs"
+
+# Modal configuration
+modal_image = modal.Image.debian_slim(python_version="3.12").pip_install_from_requirements("requirements.txt")
+
+# Define Modal mounts with appropriate paths
+saved_data_mount = modal.Mount.from_local_dir(LOCAL_DATA_DIR, remote_path=MODAL_DATA_DIR)
+historical_data_mount = modal.Mount.from_local_dir(LOCAL_HISTORICAL_DIR, remote_path=MODAL_HISTORICAL_DIR)
+logs_mount = modal.Mount.from_local_dir(LOCAL_LOGS_DIR, remote_path=MODAL_LOGS_DIR)
+
+# Configure Modal app with mounts
+app = modal.App(
+    "crypto-signals",
+    image=modal_image,
+    secrets=[modal.Secret.from_dotenv(".env")],
+    mounts=[saved_data_mount, historical_data_mount, logs_mount],
+)
 
 # %%
 
 # -- Setup --
 
 pd.options.mode.chained_assignment = None  # default is 'warn'
+
+# Base directories for different environments
+LOCAL_DATA_DIR = "./saved_data"
+LOCAL_HISTORICAL_DIR = "./historical_data"
+LOCAL_LOGS_DIR = "./logs"
+
+DOCKER_DATA_DIR = "/app/saved_data"
+DOCKER_HISTORICAL_DIR = "/app/historical_data"
+DOCKER_LOGS_DIR = "/app/logs"
+
+# Check environment
+RUNNING_IN_MODAL = os.getenv("RUNNING_IN_MODAL") == "true"
+RUNNING_IN_DOCKER = os.getenv("RUNNING_IN_DOCKER") == "true"
+
+# Dynamically set the base directories based on environment
+if RUNNING_IN_MODAL:
+    BASE_DATA_DIR = MODAL_DATA_DIR
+    BASE_HISTORICAL_DIR = MODAL_HISTORICAL_DIR
+    BASE_LOGS_DIR = MODAL_LOGS_DIR
+elif RUNNING_IN_DOCKER:
+    BASE_DATA_DIR = DOCKER_DATA_DIR
+    BASE_HISTORICAL_DIR = DOCKER_HISTORICAL_DIR
+    BASE_LOGS_DIR = DOCKER_LOGS_DIR
+else:
+    BASE_DATA_DIR = LOCAL_DATA_DIR
+    BASE_HISTORICAL_DIR = LOCAL_HISTORICAL_DIR
+    BASE_LOGS_DIR = LOCAL_LOGS_DIR
+
+# Ensure directories exist
+for directory in [BASE_DATA_DIR, BASE_HISTORICAL_DIR, BASE_LOGS_DIR]:
+    os.makedirs(directory, exist_ok=True)
 
 if not load_dotenv(".env"):
     logging.error(f"Failed to load .env file from")
@@ -43,8 +97,7 @@ logging.info(f"Successfully loaded .env file from")
 def setup_logging():
     """Configure the logging system"""
     # Create logs directory if it doesn't exist
-    log_dir = Path("logs")
-    log_dir.mkdir(exist_ok=True)
+    log_dir = BASE_LOGS_DIR
 
     # Create formatter
     formatter = logging.Formatter(
@@ -53,7 +106,10 @@ def setup_logging():
 
     # Setup file handler with rotation
     file_handler = RotatingFileHandler(
-        filename=log_dir / "crypto_signals.log", maxBytes=10 * 1024 * 1024, backupCount=5, encoding="utf-8"  # 10MB
+        filename=os.path.join(log_dir, "crypto_signals.log"),
+        maxBytes=10 * 1024 * 1024,
+        backupCount=5,
+        encoding="utf-8",  # 10MB
     )
     file_handler.setFormatter(formatter)
 
@@ -198,7 +254,7 @@ Alt Dominance pct: {stats['alt_dominance_pct']}%"""
             # Clean up temp file
 
 
-# df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
+# df = pd.read_csv(os.path.join(BASE_DATA_DIR, "token_data.csv"), index_col=0, parse_dates=True)
 
 # NotificationManager().send_price_alert_with_stats("empyreal", "test", df, send_stats=True, send_fig=True)
 # %%
@@ -236,7 +292,7 @@ class KeyRotator:
         self.limited_keys.clear()
 
 
-def api_rate_limit_call(url, use_cache=True, cg=True, max_retries=5, *args, **kwargs):
+def api_rate_limit_call(url, cg=True, max_retries=5, *args, **kwargs):
     """Make rate-limited API calls with key rotation"""
     logger = loggers["api"]
 
@@ -291,7 +347,7 @@ def api_rate_limit_call(url, use_cache=True, cg=True, max_retries=5, *args, **kw
 
 # %%
 class CryptoDataManager:
-    def __init__(self, data_file_path="saved_data/token_data.csv"):
+    def __init__(self, data_file_path=os.path.join(BASE_DATA_DIR, "token_data.csv")):
         self.data_file_path = data_file_path
         self.main_df = self._load_data()
         self.col_suffixes = [
@@ -352,7 +408,7 @@ class CryptoDataManager:
 
     def load_historical_data(self, token):
         """Load historical data from CSV."""
-        file_path = os.path.join("historical data", f"{token}-usd-max.csv")
+        file_path = os.path.join(BASE_HISTORICAL_DIR, f"{token}-usd-max.csv")
         if not os.path.exists(file_path):
             self.logger.error(f"File {file_path} not found.")
             return None
@@ -522,7 +578,7 @@ def notify_price_alerts(df: pd.DataFrame):
     timeframe_thresholds = {"7d": 0.50, "1d": 0.30, "1h": 0.15}  # ±50% change  # ±30% change  # ±15% change
 
     # Load checkpoints from file if exists
-    checkpoint_file = "saved_data/price_alert_checkpoints.json"
+    checkpoint_file = "./saved_data/price_alert_checkpoints.json"
     if os.path.exists(checkpoint_file):
         with open(checkpoint_file, "r") as f:
             checkpoints = json.load(f)
@@ -610,7 +666,7 @@ def notify_price_alerts(df: pd.DataFrame):
         json.dump(json_checkpoints, f, indent=4)
 
 
-# df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
+# df = pd.read_csv(os.path.join(BASE_DATA_DIR, "token_data.csv"), index_col=0, parse_dates=True)
 # notify_price_alerts(df)
 
 
@@ -675,7 +731,7 @@ def validate_token_price_nulls(df: pd.DataFrame) -> bool:
                         df = pd.concat([daily_data, after_hourly])
 
                         # Update the original dataframe
-                        df.to_csv("saved_data/token_data.csv")
+                        df.to_csv(os.path.join(BASE_DATA_DIR, "token_data.csv"))
 
                         notifmanager.send_custom_message(
                             f"Fixed daily/hourly transition for {token}. Hourly data starts from {hourly_start}"
@@ -688,12 +744,12 @@ def validate_token_price_nulls(df: pd.DataFrame) -> bool:
     return True
 
 
-# df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
+# df = pd.read_csv(os.path.join(BASE_DATA_DIR, "token_data.csv"), index_col=0, parse_dates=True)
 # validate_token_price_nulls(df)
 
 
 # %%
-def get_market_cap_data(save_path="market_cap_history.csv", to_save=True):
+def get_market_cap_data(save_path="saved_data/market_cap_history.csv", to_save=True):
     """
     Fetch and maintain market cap data with proper handling of daily historical
     and hourly recent data.
@@ -1132,7 +1188,7 @@ def plot_portfolio_signals(df: pd.DataFrame, token: str, show_plot: bool = True)
 
 # Add new class to manage indicators efficiently
 class IndicatorManager:
-    def __init__(self, data_file="saved_data/token_data.csv"):
+    def __init__(self, data_file=os.path.join(BASE_DATA_DIR, "token_data.csv")):
         self.data_file = data_file
         self.main_df = self._load_data()
 
@@ -1435,17 +1491,18 @@ class IndicatorManager:
 
 
 # %%
-# file_path = "saved_data/token_data.csv"
+# file_path = os.path.join(BASE_DATA_DIR, "token_data.csv")
 # data_manager = CryptoDataManager(data_file_path=file_path)
 
 # data_manager.update_multiple_tokens(TRACKED_TOKENS.keys())
 
 
-def main(file_path="saved_data/token_data.csv"):
+# @app.function(schedule=modal.Cron("0,10 * * * *"))
+def main(file_path=os.path.join(BASE_DATA_DIR, "token_data.csv")):
     logger = loggers["system"]
 
     try:
-        logger.info("Starting crypto signals processing")
+        logger.info(f"Starting crypto signals processing at {datetime.now()}")
 
         data_manager = CryptoDataManager(data_file_path=file_path)
         data_manager.update_multiple_tokens(TRACKED_TOKENS.keys())
@@ -1468,225 +1525,40 @@ def main(file_path="saved_data/token_data.csv"):
         raise
 
 
-main()
-
-# %%
-df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
-
-for token in TRACKED_TOKENS.keys():
-    plot_portfolio_signals(df, token).show()
-
-# %%
-import pandas as pd
-
-# Load token data
-df = pd.read_csv("saved_data/saved_data/token_data.csv", index_col=0, parse_dates=True)
-df
-# %%
-# Load token data
-df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
-
-# Remove last 20 days of data
-cutoff_date = df.index.max() - pd.Timedelta(days=40)
-df = df[df.index <= cutoff_date]
-
-# Save truncated data
-df.to_csv("saved_data/token_data.csv")
-
-print(f"Saved data up to {cutoff_date}")
+# main()
 
 # %%
 
-
-def clear_smooth_price_columns(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Clear all smooth price columns by setting them to None.
-
-    Parameters:
-    - df: DataFrame containing token data
-
-    Returns:
-    - DataFrame with smooth price columns cleared
-    """
-    # Create copy to avoid modifying original
-    df = df.copy()
-
-    # Get list of smooth columns
-    smooth_cols = [col for col in df.columns if col.endswith("_smooth")]
-
-    # Set smooth columns to None
-    for col in smooth_cols:
-        df[col] = None
-
-    return df
-
-
-# Load data
-df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
-
-# Clear smooth price columns
-cleaned_df = clear_smooth_price_columns(df)
-
-# Save cleaned data
-cleaned_df.to_csv("saved_data/token_data.csv")
-
-print("Smooth price columns cleared successfully")
-
+# df = pd.read_csv(os.path.join(BASE_DATA_DIR, "token_data.csv"), index_col=0, parse_dates=True)
+# df
 
 # %%
 
-
-def clear_non_price_volume_columns(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Clear all columns that are not related to price, price_minmax, or volume.
-    Keeps only raw price and volume data.
-
-    Parameters:
-    - df: DataFrame containing token data
-
-    Returns:
-    - DataFrame with non-price/volume columns cleared
-    """
-    # Create copy to avoid modifying original
-    df = df.copy()
-
-    # Get list of columns to keep
-    set_to_none_cols = [col for col in df.columns if col.startswith("clearpool")]
-
-    for col in set_to_none_cols:
-        df[col] = None
-
-    return df
+# -- Test Modal --
 
 
-def main_clear_columns():
-    # Load data
-    df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
+@app.function(schedule=modal.Cron("*/3 * * * *"))
+def test():
+    logger = loggers["system"]
+    print(f"Script ran: {datetime.now()}")
+    logger.info(f"Script ran: {datetime.now()}")
+    print(f"Script after logger: {datetime.now()}")
 
-    # Clear non-price/volume columns
-    cleaned_df = clear_non_price_volume_columns(df)
+    # Read the data
+    df = pd.read_csv(os.path.join(BASE_DATA_DIR, "token_data.csv"), index_col=0, parse_dates=True)
+    logger.info(f"Initial dataframe shape: {df.shape}")
+    print(f"Initial dataframe shape: {df.shape}")
 
-    dp(cleaned_df.columns)
-
-    # Save cleaned data
-    cleaned_df.to_csv("saved_data/token_data.csv")
-
-    print("Data cleaned and saved successfully")
-
-
-# Run the cleaning process
-main_clear_columns()
-
-# %%
-
-
-def clear_all_state_columns(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Set all state columns of all tokens to None.
-    """
-    # Create copy to avoid modifying original
-    df = df.copy()
-
-    # Find all state columns
-    state_cols = [col for col in df.columns if col.endswith("_state")]
-
-    # Set state columns to None with object dtype
-    for col in state_cols:
-        df[col] = None  # Changed from df.loc[df.index[:], col] = None
-        df[col] = df[col].astype("object")  # Ensure object dtype
-
-    return df
-
-
-def main_clear_states():
-    # Load data
-    df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
-
-    # Clear state columns
-    cleaned_df = clear_all_state_columns(df)
-
-    # Save cleaned data
-    cleaned_df.to_csv("saved_data/token_data.csv")
-
-    print("State columns cleared successfully")
-
-
-main_clear_states()
+    # Duplicate last row
+    df_modified = df.copy()
+    df_modified.loc[df_modified.index[-1] + pd.Timedelta(hours=1)] = df_modified.iloc[-1]
+    df_modified.to_csv(os.path.join(BASE_DATA_DIR, "token_data_copy.csv"))
+    logger.info(f"Added duplicate row. New shape: {df_modified.shape}")
+    print(f"Added duplicate row. New shape: {df_modified.shape}")
 
 
 # %%
-def update_state_column_names():
-    """
-    Load state columns, convert ath_count to peak_count in state dictionaries, and save back to file
-    """
-    # Load data
-    df = pd.read_csv("saved_data/token_data.csv", index_col=0, parse_dates=True)
+# df = pd.read_csv(os.path.join(BASE_DATA_DIR, "token_data.csv"), index_col=0, parse_dates=True)
 
-    # Find all state columns
-    state_cols = [col for col in df.columns if col.endswith("_state")]
-
-    # Process each state column
-    for col in state_cols:
-        # Get non-null state values
-        mask = df[col].notna()
-
-        # Convert strings to dicts and update key name
-        df.loc[mask, col] = (
-            df.loc[mask, col]
-            .apply(
-                lambda x: {
-                    "last_ath_price": eval(x)["last_ath_price"],
-                    "peak_count": eval(x)["ath_count"] if "ath_count" in eval(x) else eval(x).get("peak_count", 0),
-                    "ath_triggered": eval(x)["ath_triggered"],
-                }
-            )
-            .apply(str)
-        )
-
-    # Save updated data
-    df.to_csv("saved_data/token_data.csv")
-    print("State columns updated successfully")
-
-
-# Run the update
-update_state_column_names()
-
-
-def validate_state_continuity(df, token):
-    """Validate that state transitions are continuous and logical"""
-    state_col = f"{token}_state"
-    states = df[state_col].dropna()
-
-    prev_state = None
-    for idx, state_str in states.items():
-        current_state = parse_state(state_str)
-        if current_state is None:
-            continue
-
-        if prev_state:
-            # Verify peak count never decreases
-            if current_state["peak_count"] < prev_state["peak_count"]:
-                print(f"Warning: Peak count decreased at {idx}")
-
-            # Verify ATH price logic
-            if current_state["last_ath_price"] == 0 and prev_state["last_ath_price"] > 0:
-                print(f"Warning: ATH price reset to 0 at {idx}")
-
-        prev_state = current_state
-
-
-def validate_env_vars():
-    """Validate that all required environment variables are set"""
-    required_vars = ["TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID", "CG_API_KEY_1", "CG_API_KEY_2", "CG_API_KEY_3"]
-
-    missing_vars = [var for var in required_vars if not os.getenv(var)]
-
-    if missing_vars:
-        raise EnvironmentError(
-            f"Missing required environment variables: {', '.join(missing_vars)}\n"
-            "Please check your .env file and ensure all required variables are set."
-        )
-
-
-# Call this at startup
-validate_env_vars()
+# for token in TRACKED_TOKENS.keys():
+#     plot_portfolio_signals(df, token).show()
