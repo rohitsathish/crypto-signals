@@ -52,6 +52,15 @@ import pytz
 
 pd.options.mode.chained_assignment = None  # default is 'warn'
 
+if not load_dotenv(".env"):
+    logging.error(f"Failed to load .env file from")
+    raise RuntimeError(f"Failed to load .env file from")
+logging.info(f"Successfully loaded .env file from")
+
+env_path = Path('.env')
+load_dotenv(env_path)
+print(os.getenv("RUNNING_IN_DOCKER"), os.getenv("RUNNING_IN_MODAL"), os.getenv("TELEGRAM_BOT_TOKEN"))
+
 # Base directories for different environments
 LOCAL_DATA_DIR = "./saved_data"
 LOCAL_HISTORICAL_DIR = "./historical_data"
@@ -62,15 +71,15 @@ DOCKER_HISTORICAL_DIR = "/app/historical_data"
 DOCKER_LOGS_DIR = "/app/logs"
 
 # Check environment
-RUNNING_IN_MODAL = os.getenv("RUNNING_IN_MODAL") == "true"
+# RUNNING_IN_MODAL = os.getenv("RUNNING_IN_MODAL") == "true"
 RUNNING_IN_DOCKER = os.getenv("RUNNING_IN_DOCKER") == "true"
 
 # Dynamically set the base directories based on environment
-if RUNNING_IN_MODAL:
-    BASE_DATA_DIR = MODAL_DATA_DIR
-    BASE_HISTORICAL_DIR = MODAL_HISTORICAL_DIR
-    BASE_LOGS_DIR = MODAL_LOGS_DIR
-elif RUNNING_IN_DOCKER:
+# if RUNNING_IN_MODAL:
+#     BASE_DATA_DIR = MODAL_DATA_DIR
+#     BASE_HISTORICAL_DIR = MODAL_HISTORICAL_DIR
+#     BASE_LOGS_DIR = MODAL_LOGS_DIR
+if RUNNING_IN_DOCKER:
     BASE_DATA_DIR = DOCKER_DATA_DIR
     BASE_HISTORICAL_DIR = DOCKER_HISTORICAL_DIR
     BASE_LOGS_DIR = DOCKER_LOGS_DIR
@@ -79,14 +88,12 @@ else:
     BASE_HISTORICAL_DIR = LOCAL_HISTORICAL_DIR
     BASE_LOGS_DIR = LOCAL_LOGS_DIR
 
+print(BASE_DATA_DIR, RUNNING_IN_DOCKER)
+
 # Ensure directories exist
 for directory in [BASE_DATA_DIR, BASE_HISTORICAL_DIR, BASE_LOGS_DIR]:
     os.makedirs(directory, exist_ok=True)
 
-if not load_dotenv(".env"):
-    logging.error(f"Failed to load .env file from")
-    raise RuntimeError(f"Failed to load .env file from")
-logging.info(f"Successfully loaded .env file from")
 
 # %%
 
@@ -100,7 +107,9 @@ def setup_logging():
 
     # Create formatter
     formatter = logging.Formatter(
-        "[%(asctime)s] [%(levelname)s] [%(name)s] [%(funcName)s] - %(message)s", datefmt="%Y-%m-%d %H:%M:%S %Z", defaults={"tz": pytz.timezone("Asia/Kolkata")}
+        "[%(asctime)s] [%(levelname)s] [%(name)s] [%(funcName)s] - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S %Z",
+        defaults={"tz": pytz.timezone("Asia/Kolkata")},
     )
 
     # Setup file handler with rotation
@@ -897,7 +906,7 @@ def calculate_portfolio_signals_for_token(
             state = {
                 "last_ath_price": float(initial_state.get("last_ath_price", 0)),
                 "last_ath_trigger": float(initial_state.get("last_ath_trigger", 0)),
-                "last_ath_datetime": add_india_offset(initial_state.get("last_ath_datetime", None)),
+                "last_ath_datetime": initial_state.get("last_ath_datetime", None),
                 "peak_count": int(initial_state.get("peak_count", 0)),
                 "ath_triggered": bool(initial_state.get("ath_triggered", False)),
             }
@@ -962,7 +971,7 @@ def calculate_portfolio_signals_for_token(
             and current_price > state["last_ath_trigger"] * peak_limit  # Compare with last trigger price
         ):
             state["last_ath_price"] = current_price
-            state["last_ath_datetime"] = add_india_offset(i)
+            state["last_ath_datetime"] = i
             state["ath_triggered"] = True
 
             if send_notifications and TRACKED_TOKENS.get(token, {}).get("track_sell", False) == True:
@@ -987,7 +996,7 @@ def calculate_portfolio_signals_for_token(
         # Update last_ath_price when peak not yet triggered
         if state["ath_triggered"] and current_peak != 1 and current_price > state["last_ath_price"]:
             state["last_ath_price"] = current_price
-            state["last_ath_datetime"] = add_india_offset(i)
+            state["last_ath_datetime"] = i
 
         # Execute sell at confirmed peak
         if state["ath_triggered"] and current_peak == 1:
@@ -1543,19 +1552,19 @@ main()
 #     logger.info(f"Script ran: {datetime.now()}")
 #     print(f"Script after logger: {datetime.now()}")
 
-    # # Read the data
-    # df = pd.read_csv(os.path.join(BASE_DATA_DIR, "token_data.csv"), index_col=0, parse_dates=True)
-    # logger.info(f"Initial dataframe shape: {df.shape}")
-    # print(f"Initial dataframe shape: {df.shape}")
+# # Read the data
+# df = pd.read_csv(os.path.join(BASE_DATA_DIR, "token_data.csv"), index_col=0, parse_dates=True)
+# logger.info(f"Initial dataframe shape: {df.shape}")
+# print(f"Initial dataframe shape: {df.shape}")
 
-    # # Duplicate last row
-    # df_modified = df.copy()
-    # df_modified.loc[df_modified.index[-1] + pd.Timedelta(hours=1)] = df_modified.iloc[-1]
-    # df_modified.to_csv(os.path.join(BASE_DATA_DIR, "token_data_copy.csv"))
-    # logger.info(f"Added duplicate row. New shape: {df_modified.shape}")
-    # print(f"Added duplicate row. New shape: {df_modified.shape}")
+# # Duplicate last row
+# df_modified = df.copy()
+# df_modified.loc[df_modified.index[-1] + pd.Timedelta(hours=1)] = df_modified.iloc[-1]
+# df_modified.to_csv(os.path.join(BASE_DATA_DIR, "token_data_copy.csv"))
+# logger.info(f"Added duplicate row. New shape: {df_modified.shape}")
+# print(f"Added duplicate row. New shape: {df_modified.shape}")
 
-#test()
+# test()
 
 
 # %%
