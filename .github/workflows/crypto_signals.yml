@@ -7,7 +7,7 @@ on:
 
 jobs:
   process-signals:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04  # Updated from ubuntu-24.04
     permissions:
       contents: write
       issues: write
@@ -24,9 +24,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: 'pip'
+          cache: pip
 
-      # Install system dependencies required by some Python packages
       - name: Install system dependencies
         run: |
           sudo apt-get update
@@ -35,7 +34,6 @@ jobs:
             python3-dev \
             git
 
-      # Install Python dependencies with error handling
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip setuptools wheel
@@ -45,12 +43,19 @@ jobs:
             exit 1
           fi
 
-      # Verify secrets and create .env
+      # Make secrets available as environment variables
       - name: Setup environment
+        env:
+          CG_API_KEY_1: ${{ secrets.CG_API_KEY_1 }}
+          CG_API_KEY_2: ${{ secrets.CG_API_KEY_2 }}
+          CG_API_KEY_3: ${{ secrets.CG_API_KEY_3 }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           # Verify secrets
           for secret in CG_API_KEY_1 CG_API_KEY_2 CG_API_KEY_3 TELEGRAM_BOT_TOKEN TELEGRAM_CHAT_ID; do
-            if [ -z "$(eval echo \${{ secrets[secret] }})" ]; then
+            # Indirect expansion: ${!secret} refers to env var with name=$secret
+            if [ -z "${!secret}" ]; then
               echo "Error: $secret is not set"
               exit 1
             fi
@@ -62,28 +67,25 @@ jobs:
 
           # Create .env file
           cat > .env << EOL
-          CG_API_KEY_1=${{ secrets.CG_API_KEY_1 }}
-          CG_API_KEY_2=${{ secrets.CG_API_KEY_2 }}
-          CG_API_KEY_3=${{ secrets.CG_API_KEY_3 }}
-          TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
-          RUNNING_IN_DOCKER=true
-          EOL
+CG_API_KEY_1=${CG_API_KEY_1}
+CG_API_KEY_2=${CG_API_KEY_2}
+CG_API_KEY_3=${CG_API_KEY_3}
+TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+RUNNING_IN_DOCKER=true
+EOL
 
-      # Build Docker image with proper caching
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Build and run container
         run: |
-          # Build with proper caching
           DOCKER_BUILDKIT=1 docker build \
             --build-arg BUILDKIT_INLINE_CACHE=1 \
             --cache-from=type=gha \
             --cache-to=type=gha,mode=max \
             -t crypto-signals .
 
-          # Run with proper volume mounts and environment
           docker run --rm \
             -v ${{ github.workspace }}/saved_data:/app/saved_data \
             -v ${{ github.workspace }}/historical_data:/app/historical_data \
@@ -91,7 +93,6 @@ jobs:
             --env-file .env \
             crypto-signals
 
-      # Commit changes with error handling
       - name: Commit changes
         run: |
           if [ -n "$(git status --porcelain saved_data historical_data logs)" ]; then
@@ -107,7 +108,6 @@ jobs:
             echo "No changes to commit"
           fi
 
-      # Enhanced error notification
       - name: Notify on failure
         if: failure()
         run: |
