@@ -21,7 +21,6 @@ from dotenv import load_dotenv
 import logging
 from logging.handlers import RotatingFileHandler
 from scipy.signal import find_peaks
-import modal
 
 # %%
 
@@ -1537,24 +1536,26 @@ def main(file_path=os.path.join(BASE_DATA_DIR, "token_data.csv")):
 # -- Test Modal --
 
 
-@app.function(schedule=modal.Cron("*/3 * * * *"))
+# @app.function(schedule=modal.Cron("*/3 * * * *"))
 def test():
     logger = loggers["system"]
     print(f"Script ran: {datetime.now()}")
     logger.info(f"Script ran: {datetime.now()}")
     print(f"Script after logger: {datetime.now()}")
 
-    # Read the data
-    df = pd.read_csv(os.path.join(BASE_DATA_DIR, "token_data.csv"), index_col=0, parse_dates=True)
-    logger.info(f"Initial dataframe shape: {df.shape}")
-    print(f"Initial dataframe shape: {df.shape}")
+    # # Read the data
+    # df = pd.read_csv(os.path.join(BASE_DATA_DIR, "token_data.csv"), index_col=0, parse_dates=True)
+    # logger.info(f"Initial dataframe shape: {df.shape}")
+    # print(f"Initial dataframe shape: {df.shape}")
 
-    # Duplicate last row
-    df_modified = df.copy()
-    df_modified.loc[df_modified.index[-1] + pd.Timedelta(hours=1)] = df_modified.iloc[-1]
-    df_modified.to_csv(os.path.join(BASE_DATA_DIR, "token_data_copy.csv"))
-    logger.info(f"Added duplicate row. New shape: {df_modified.shape}")
-    print(f"Added duplicate row. New shape: {df_modified.shape}")
+    # # Duplicate last row
+    # df_modified = df.copy()
+    # df_modified.loc[df_modified.index[-1] + pd.Timedelta(hours=1)] = df_modified.iloc[-1]
+    # df_modified.to_csv(os.path.join(BASE_DATA_DIR, "token_data_copy.csv"))
+    # logger.info(f"Added duplicate row. New shape: {df_modified.shape}")
+    # print(f"Added duplicate row. New shape: {df_modified.shape}")
+
+test()
 
 
 # %%

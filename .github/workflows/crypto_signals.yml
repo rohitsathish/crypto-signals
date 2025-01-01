@@ -1,9 +1,11 @@
 name: Crypto Signals Processing
 
 on:
+  push:
+    branches:
+      - main
   schedule:
-    - cron: '*/3 * * * *'  # Run every 3 minutes
-  workflow_dispatch:  # Allow manual triggering
+    - cron: '*/3 * * * *'  # Example: run every 3 minutes
 
 jobs:
   process-signals:
