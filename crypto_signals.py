@@ -12,7 +12,6 @@ import pandas as pd
 import json
 from datetime import datetime, timedelta, timezone
 import time
-from IPython.display import display as dp
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 from pathlib import Path
@@ -21,6 +20,7 @@ from dotenv import load_dotenv
 import logging
 from logging.handlers import RotatingFileHandler
 from scipy.signal import find_peaks
+import pytz
 
 # %%
 
@@ -100,7 +100,7 @@ def setup_logging():
 
     # Create formatter
     formatter = logging.Formatter(
-        "[%(asctime)s] [%(levelname)s] [%(name)s] [%(funcName)s] - %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
+        "[%(asctime)s] [%(levelname)s] [%(name)s] [%(funcName)s] - %(message)s", datefmt="%Y-%m-%d %H:%M:%S %Z", defaults={"tz": pytz.timezone("Asia/Kolkata")}
     )
 
     # Setup file handler with rotation
@@ -897,7 +897,7 @@ def calculate_portfolio_signals_for_token(
             state = {
                 "last_ath_price": float(initial_state.get("last_ath_price", 0)),
                 "last_ath_trigger": float(initial_state.get("last_ath_trigger", 0)),
-                "last_ath_datetime": initial_state.get("last_ath_datetime", None),
+                "last_ath_datetime": add_india_offset(initial_state.get("last_ath_datetime", None)),
                 "peak_count": int(initial_state.get("peak_count", 0)),
                 "ath_triggered": bool(initial_state.get("ath_triggered", False)),
             }
@@ -935,7 +935,7 @@ def calculate_portfolio_signals_for_token(
         latest_datetime = last_valid
 
         LATEST_STATS_STR = (
-            f"Latest Datetime: {latest_datetime}\n"
+            f"Latest Datetime: {add_india_offset(latest_datetime)}\n"
             f"Latest Price: ${latest_price:.4f}\n"
             f"Latest Scaled Price: {latest_scaled_price:.4f}\n"
         )
@@ -962,7 +962,7 @@ def calculate_portfolio_signals_for_token(
             and current_price > state["last_ath_trigger"] * peak_limit  # Compare with last trigger price
         ):
             state["last_ath_price"] = current_price
-            state["last_ath_datetime"] = i
+            state["last_ath_datetime"] = add_india_offset(i)
             state["ath_triggered"] = True
 
             if send_notifications and TRACKED_TOKENS.get(token, {}).get("track_sell", False) == True:
@@ -972,7 +972,7 @@ def calculate_portfolio_signals_for_token(
 
                 message = (
                     f"⚠️ ATH Triggered: {token}\n\n"
-                    f"Triggered at: {i}\n"
+                    f"Triggered at: {add_india_offset(i)}\n"
                     f"Price: ${current_price:.4f}\n"
                     f"Peak Count: {state['peak_count']}\n"
                     f"{LATEST_STATS_STR}"
@@ -987,7 +987,7 @@ def calculate_portfolio_signals_for_token(
         # Update last_ath_price when peak not yet triggered
         if state["ath_triggered"] and current_peak != 1 and current_price > state["last_ath_price"]:
             state["last_ath_price"] = current_price
-            state["last_ath_datetime"] = i
+            state["last_ath_datetime"] = add_india_offset(i)
 
         # Execute sell at confirmed peak
         if state["ath_triggered"] and current_peak == 1:
@@ -1004,7 +1004,7 @@ def calculate_portfolio_signals_for_token(
 
                 message = (
                     f"🚨 Sell Signal: {token}\n\n"
-                    f"Triggered at: {i}\n"
+                    f"Triggered at: {add_india_offset(i)}\n"
                     f"Triggered Price: ${current_price:.4f}\n"
                     f"Triggered Normalized Price: {current_scaled_price:.4f}\n"
                     f"\n"
@@ -1033,7 +1033,7 @@ def calculate_portfolio_signals_for_token(
 
                 message = (
                     f"💰 Buy Signal: {token}\n\n"
-                    f"Triggered at: {i}\n"
+                    f"Triggered at: {add_india_offset(i)}\n"
                     f"Triggered Price: ${current_price:.4f}\n"
                     f"Triggered Normalized Price: {current_scaled_price:.4f}\n"
                     f"Buy_pct: {buy_pct:.2f}\n"
@@ -1501,7 +1501,7 @@ def main(file_path=os.path.join(BASE_DATA_DIR, "token_data.csv")):
     logger = loggers["system"]
 
     try:
-        logger.info(f"Starting crypto signals processing at {datetime.now()}")
+        logger.info(f"Starting crypto signals processing")
 
         data_manager = CryptoDataManager(data_file_path=file_path)
         data_manager.update_multiple_tokens(TRACKED_TOKENS.keys())
@@ -1524,7 +1524,7 @@ def main(file_path=os.path.join(BASE_DATA_DIR, "token_data.csv")):
         raise
 
 
-# main()
+main()
 
 # %%
 
@@ -1537,11 +1537,11 @@ def main(file_path=os.path.join(BASE_DATA_DIR, "token_data.csv")):
 
 
 # @app.function(schedule=modal.Cron("*/3 * * * *"))
-def test():
-    logger = loggers["system"]
-    print(f"Script ran: {datetime.now()}")
-    logger.info(f"Script ran: {datetime.now()}")
-    print(f"Script after logger: {datetime.now()}")
+# def test():
+#     logger = loggers["system"]
+#     print(f"Script ran: {datetime.now()}")
+#     logger.info(f"Script ran: {datetime.now()}")
+#     print(f"Script after logger: {datetime.now()}")
 
     # # Read the data
     # df = pd.read_csv(os.path.join(BASE_DATA_DIR, "token_data.csv"), index_col=0, parse_dates=True)
@@ -1555,7 +1555,7 @@ def test():
     # logger.info(f"Added duplicate row. New shape: {df_modified.shape}")
     # print(f"Added duplicate row. New shape: {df_modified.shape}")
 
-test()
+#test()
 
 
 # %%
