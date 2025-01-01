@@ -88,18 +88,21 @@ jobs:
 
       - name: Build and run container
         run: |
+          # Build the Docker image with BuildKit caching
           DOCKER_BUILDKIT=1 docker build \
+            -f Dockerfile \
             --build-arg BUILDKIT_INLINE_CACHE=1 \
             --cache-from=type=gha \
             --cache-to=type=gha,mode=max \
-            -t crypto-signals .
+            -t crypto-signals:latest \
+            .
 
+          # Run the container, mounting saved_data/ and logs/ so they persist
           docker run --rm \
             -v ${{ github.workspace }}/saved_data:/app/saved_data \
-            -v ${{ github.workspace }}/historical_data:/app/historical_data \
             -v ${{ github.workspace }}/logs:/app/logs \
             --env-file .env \
-            crypto-signals
+            crypto-signals:latest
 
       - name: Commit changes
         run: |
