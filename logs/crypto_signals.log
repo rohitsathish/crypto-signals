@@ -854,3 +854,135 @@ Processing ondo-finance...
 [2025-01-01 10:51:07] [INFO] [crypto_signals.system] [test] - Script ran: 2025-01-01 10:51:07.692827
 [2025-01-01 11:00:21] [INFO] [crypto_signals.system] [test] - Script ran: 2025-01-01 11:00:21.890331
 [2025-01-01 11:08:39] [INFO] [crypto_signals.system] [test] - Script ran: 2025-01-01 11:08:39.944811
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [remove_columns] - Removed columns: []
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing near...
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token near
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for near from 2024-12-29 12:00:00 to 2025-01-01 12:00:00 (3 days)
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for near (72 days)
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated near
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing oasis-network...
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token oasis-network
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for oasis-network from 2024-12-29 12:00:00 to 2025-01-01 12:00:00 (3 days)
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for oasis-network (72 days)
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated oasis-network
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing ix-swap...
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token ix-swap
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for ix-swap from 2024-12-29 12:00:00 to 2025-01-01 12:00:00 (3 days)
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for ix-swap (72 days)
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated ix-swap
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing empyreal...
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token empyreal
+[2025-01-01 11:23:51 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for empyreal from 2024-12-29 12:00:00 to 2025-01-01 12:00:00 (3 days)
+[2025-01-01 11:23:52 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for empyreal (72 days)
+[2025-01-01 11:23:52 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated empyreal
+[2025-01-01 11:23:52 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing maple...
+[2025-01-01 11:23:52 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token maple
+[2025-01-01 11:23:52 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for maple from 2024-12-29 12:00:00 to 2025-01-01 12:00:00 (3 days)
+[2025-01-01 11:23:52 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for maple (72 days)
+[2025-01-01 11:23:52 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated maple
+[2025-01-01 11:23:52 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing clearpool...
+[2025-01-01 11:23:52 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token clearpool
+[2025-01-01 11:23:52 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for clearpool from 2024-12-29 12:00:00 to 2025-01-01 12:00:00 (3 days)
+[2025-01-01 11:23:57 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 7.6499999999999995s before next attempt
+[2025-01-01 11:24:06 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 11.475s before next attempt
+[2025-01-01 11:24:06 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for clearpool (72 days)
+[2025-01-01 11:24:06 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated clearpool
+[2025-01-01 11:24:06 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing simmi-token...
+[2025-01-01 11:24:06 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token simmi-token
+[2025-01-01 11:24:06 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for simmi-token from 2024-12-29 12:00:00 to 2025-01-01 12:00:00 (3 days)
+[2025-01-01 11:24:06 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for simmi-token (72 days)
+[2025-01-01 11:24:06 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated simmi-token
+[2025-01-01 11:24:06 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing ondo-finance...
+[2025-01-01 11:24:06 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token ondo-finance
+[2025-01-01 11:24:06 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for ondo-finance from 2024-12-29 12:00:00 to 2025-01-01 12:00:00 (3 days)
+[2025-01-01 11:24:06 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for ondo-finance (72 days)
+[2025-01-01 11:24:06 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated ondo-finance
+[2025-01-01 11:24:07 UTC] [INFO] [crypto_signals.system] [main] - Token data updated
+[2025-01-01 11:24:07 UTC] [INFO] [crypto_signals.system] [main] - Token price validation complete
+[2025-01-01 11:24:08 UTC] [INFO] [crypto_signals.system] [main] - Price alerts processed
+[2025-01-01 11:24:08 UTC] [INFO] [crypto_signals.data] [process_new_data] - Expanding indicators updated in 0.01s
+[2025-01-01 11:24:08 UTC] [INFO] [crypto_signals.data] [process_new_data] - Rolling indicators updated in 0.26s
+[2025-01-01 11:24:08 UTC] [ERROR] [crypto_signals.signal] [calculate_portfolio_signals_for_token] - Error initializing state for clearpool: unsupported operand type(s) for +: 'NoneType' and 'datetime.timedelta'
+Traceback (most recent call last):
+  File "/app/crypto_signals.py", line 900, in calculate_portfolio_signals_for_token
+    "last_ath_datetime": add_india_offset(initial_state.get("last_ath_datetime", None)),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/crypto_signals.py", line 557, in add_india_offset
+    return dt + timedelta(hours=5, minutes=30)
+           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'datetime.timedelta'
+[2025-01-01 11:24:08 UTC] [ERROR] [crypto_signals.signal] [calculate_portfolio_signals_for_token] - Error initializing state for empyreal: unsupported operand type(s) for +: 'NoneType' and 'datetime.timedelta'
+Traceback (most recent call last):
+  File "/app/crypto_signals.py", line 900, in calculate_portfolio_signals_for_token
+    "last_ath_datetime": add_india_offset(initial_state.get("last_ath_datetime", None)),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/crypto_signals.py", line 557, in add_india_offset
+    return dt + timedelta(hours=5, minutes=30)
+           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'datetime.timedelta'
+[2025-01-01 11:24:08 UTC] [ERROR] [crypto_signals.signal] [calculate_portfolio_signals_for_token] - Error initializing state for ix-swap: unsupported operand type(s) for +: 'NoneType' and 'datetime.timedelta'
+Traceback (most recent call last):
+  File "/app/crypto_signals.py", line 900, in calculate_portfolio_signals_for_token
+    "last_ath_datetime": add_india_offset(initial_state.get("last_ath_datetime", None)),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/crypto_signals.py", line 557, in add_india_offset
+    return dt + timedelta(hours=5, minutes=30)
+           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'datetime.timedelta'
+[2025-01-01 11:24:08 UTC] [ERROR] [crypto_signals.signal] [calculate_portfolio_signals_for_token] - Error initializing state for maple: unsupported operand type(s) for +: 'NoneType' and 'datetime.timedelta'
+Traceback (most recent call last):
+  File "/app/crypto_signals.py", line 900, in calculate_portfolio_signals_for_token
+    "last_ath_datetime": add_india_offset(initial_state.get("last_ath_datetime", None)),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/crypto_signals.py", line 557, in add_india_offset
+    return dt + timedelta(hours=5, minutes=30)
+           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'datetime.timedelta'
+[2025-01-01 11:24:08 UTC] [ERROR] [crypto_signals.signal] [calculate_portfolio_signals_for_token] - Error initializing state for near: unsupported operand type(s) for +: 'NoneType' and 'datetime.timedelta'
+Traceback (most recent call last):
+  File "/app/crypto_signals.py", line 900, in calculate_portfolio_signals_for_token
+    "last_ath_datetime": add_india_offset(initial_state.get("last_ath_datetime", None)),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/crypto_signals.py", line 557, in add_india_offset
+    return dt + timedelta(hours=5, minutes=30)
+           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'datetime.timedelta'
+[2025-01-01 11:24:08 UTC] [ERROR] [crypto_signals.signal] [calculate_portfolio_signals_for_token] - Error initializing state for oasis-network: unsupported operand type(s) for +: 'NoneType' and 'datetime.timedelta'
+Traceback (most recent call last):
+  File "/app/crypto_signals.py", line 900, in calculate_portfolio_signals_for_token
+    "last_ath_datetime": add_india_offset(initial_state.get("last_ath_datetime", None)),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/crypto_signals.py", line 557, in add_india_offset
+    return dt + timedelta(hours=5, minutes=30)
+           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'datetime.timedelta'
+[2025-01-01 11:24:08 UTC] [ERROR] [crypto_signals.signal] [calculate_portfolio_signals_for_token] - Error initializing state for ondo-finance: unsupported operand type(s) for +: 'NoneType' and 'datetime.timedelta'
+Traceback (most recent call last):
+  File "/app/crypto_signals.py", line 900, in calculate_portfolio_signals_for_token
+    "last_ath_datetime": add_india_offset(initial_state.get("last_ath_datetime", None)),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/crypto_signals.py", line 557, in add_india_offset
+    return dt + timedelta(hours=5, minutes=30)
+           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'datetime.timedelta'
+[2025-01-01 11:24:08 UTC] [ERROR] [crypto_signals.signal] [calculate_portfolio_signals_for_token] - Error initializing state for simmi-token: unsupported operand type(s) for +: 'NoneType' and 'datetime.timedelta'
+Traceback (most recent call last):
+  File "/app/crypto_signals.py", line 900, in calculate_portfolio_signals_for_token
+    "last_ath_datetime": add_india_offset(initial_state.get("last_ath_datetime", None)),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/crypto_signals.py", line 557, in add_india_offset
+    return dt + timedelta(hours=5, minutes=30)
+           ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'datetime.timedelta'
+[2025-01-01 11:24:08 UTC] [INFO] [crypto_signals.data] [process_new_data] - Portfolio signals updated in 0.06s
+[2025-01-01 11:24:09 UTC] [INFO] [crypto_signals.data] [process_new_data] - Data processing complete and saved
+[2025-01-01 11:24:09 UTC] [INFO] [crypto_signals.system] [main] - Indicator processing complete
