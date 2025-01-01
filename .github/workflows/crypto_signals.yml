@@ -50,7 +50,7 @@ jobs:
         run: |
           # Verify secrets
           for secret in CG_API_KEY_1 CG_API_KEY_2 CG_API_KEY_3 TELEGRAM_BOT_TOKEN TELEGRAM_CHAT_ID; do
-            if [ -z "$(eval echo \${{ secrets.$secret }})" ]; then
+            if [ -z "$(eval echo \${{ secrets[secret] }})" ]; then
               echo "Error: $secret is not set"
               exit 1
             fi
