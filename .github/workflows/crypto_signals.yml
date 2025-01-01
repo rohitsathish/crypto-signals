@@ -2,7 +2,7 @@ name: Crypto Signals Processing
 
 on:
   schedule:
-    - cron: '*/3 * * * *'  # Run every 5 minutes
+    - cron: '*/3 * * * *'  # Run every 3 minutes
   workflow_dispatch:  # Allow manual triggering
 
 env:
@@ -12,6 +12,9 @@ env:
 jobs:
   process-signals:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
 
     # Add concurrency to prevent overlapping runs
     concurrency:
@@ -61,30 +64,43 @@ jobs:
       # Verify secrets
       - name: Check required secrets
         run: |
-          missing_secrets=()
-          for secret in "CG_API_KEY_1" "CG_API_KEY_2" "CG_API_KEY_3" "TELEGRAM_BOT_TOKEN" "TELEGRAM_CHAT_ID"; do
-            if [ -z "${{ secrets[secret] }}" ]; then
-              missing_secrets+=($secret)
-            fi
-          done
-          if [ ${#missing_secrets[@]} -ne 0 ]; then
-            echo "Error: Missing required secrets: ${missing_secrets[*]}"
+          if [ -z "${{ secrets.CG_API_KEY_1 }}" ]; then
+            echo "Error: CG_API_KEY_1 is not set"
+            exit 1
+          fi
+          if [ -z "${{ secrets.CG_API_KEY_2 }}" ]; then
+            echo "Error: CG_API_KEY_2 is not set"
+            exit 1
+          fi
+          if [ -z "${{ secrets.CG_API_KEY_3 }}" ]; then
+            echo "Error: CG_API_KEY_3 is not set"
+            exit 1
+          fi
+          if [ -z "${{ secrets.TELEGRAM_BOT_TOKEN }}" ]; then
+            echo "Error: TELEGRAM_BOT_TOKEN is not set"
+            exit 1
+          fi
+          if [ -z "${{ secrets.TELEGRAM_CHAT_ID }}" ]; then
+            echo "Error: TELEGRAM_CHAT_ID is not set"
             exit 1
           fi
 
-      # Ensure directory permissions
-      - name: Set directory permissions
+      # Create necessary directories
+      - name: Create directories
         run: |
+          mkdir -p saved_data historical_data logs
           chmod -R 777 saved_data historical_data logs
 
       # Create .env file from secrets
       - name: Create .env file
         run: |
-          echo "CG_API_KEY_1=${{ secrets.CG_API_KEY_1 }}" >> .env
-          echo "CG_API_KEY_2=${{ secrets.CG_API_KEY_2 }}" >> .env
-          echo "CG_API_KEY_3=${{ secrets.CG_API_KEY_3 }}" >> .env
-          echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
-          echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env
+          {
+            echo "CG_API_KEY_1=${{ secrets.CG_API_KEY_1 }}"
+            echo "CG_API_KEY_2=${{ secrets.CG_API_KEY_2 }}"
+            echo "CG_API_KEY_3=${{ secrets.CG_API_KEY_3 }}"
+            echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}"
+            echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}"
+          } > .env
 
       # Build and run Docker container
       - name: Build and run Docker container
@@ -122,15 +138,10 @@ jobs:
           # Send to Telegram
           curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
             -H "Content-Type: application/json" \
-            -d '{
-              "chat_id": "${{ secrets.TELEGRAM_CHAT_ID }}",
-              "text": "❌ GitHub Actions workflow failed!\n\nRepository: ${{ github.repository }}\nWorkflow: ${{ github.workflow }}\nRun: ${{ github.run_id }}\n\nSee details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-            }'
+            -d "{\"chat_id\":\"${{ secrets.TELEGRAM_CHAT_ID }}\",\"text\":\"❌ GitHub Actions workflow failed!\n\nRepository: ${{ github.repository }}\nWorkflow: ${{ github.workflow }}\nRun: ${{ github.run_id }}\n\nSee details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
 
           # Create GitHub issue
           gh issue create \
             --title "🚨 Workflow Failed: ${{ github.workflow }}" \
             --body "Workflow run failed on $(date)\n\nRun ID: ${{ github.run_id }}\nSee details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            --label "bug,automation"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            --label "bug" --label "automation"
