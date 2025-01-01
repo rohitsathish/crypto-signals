@@ -5,18 +5,13 @@ on:
     - cron: '*/3 * * * *'  # Run every 3 minutes
   workflow_dispatch:  # Allow manual triggering
 
-env:
-  DOCKER_IMAGE: crypto-signals
-  CACHE_KEY: crypto-signals-cache-${{ github.sha }}
-
 jobs:
   process-signals:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
       issues: write
 
-    # Add concurrency to prevent overlapping runs
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
@@ -24,124 +19,107 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
         with:
-          fetch-depth: 1  # Shallow clone for faster checkout
+          python-version: '3.12'
+          cache: 'pip'
 
-      # Setup Docker Buildx for better caching
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      # Cache Docker layers
-      - name: Cache Docker layers
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-
-      # Cache pip dependencies
-      - name: Cache pip packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      # Cache data directories
-      - name: Cache data directories
-        uses: actions/cache@v3
-        with:
-          path: |
-            saved_data
-            historical_data
-            logs
-          key: data-cache-${{ github.sha }}
-          restore-keys: |
-            data-cache-
-
-      # Verify secrets
-      - name: Check required secrets
+      # Install system dependencies required by some Python packages
+      - name: Install system dependencies
         run: |
-          if [ -z "${{ secrets.CG_API_KEY_1 }}" ]; then
-            echo "Error: CG_API_KEY_1 is not set"
-            exit 1
-          fi
-          if [ -z "${{ secrets.CG_API_KEY_2 }}" ]; then
-            echo "Error: CG_API_KEY_2 is not set"
-            exit 1
-          fi
-          if [ -z "${{ secrets.CG_API_KEY_3 }}" ]; then
-            echo "Error: CG_API_KEY_3 is not set"
-            exit 1
-          fi
-          if [ -z "${{ secrets.TELEGRAM_BOT_TOKEN }}" ]; then
-            echo "Error: TELEGRAM_BOT_TOKEN is not set"
-            exit 1
-          fi
-          if [ -z "${{ secrets.TELEGRAM_CHAT_ID }}" ]; then
-            echo "Error: TELEGRAM_CHAT_ID is not set"
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential \
+            python3-dev \
+            git
+
+      # Install Python dependencies with error handling
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install -r requirements.txt
+          if [ $? -ne 0 ]; then
+            echo "Failed to install dependencies"
             exit 1
           fi
 
-      # Create necessary directories
-      - name: Create directories
+      # Verify secrets and create .env
+      - name: Setup environment
         run: |
+          # Verify secrets
+          for secret in CG_API_KEY_1 CG_API_KEY_2 CG_API_KEY_3 TELEGRAM_BOT_TOKEN TELEGRAM_CHAT_ID; do
+            if [ -z "$(eval echo \${{ secrets.$secret }})" ]; then
+              echo "Error: $secret is not set"
+              exit 1
+            fi
+          done
+
+          # Create directories with proper permissions
           mkdir -p saved_data historical_data logs
           chmod -R 777 saved_data historical_data logs
 
-      # Create .env file from secrets
-      - name: Create .env file
-        run: |
-          {
-            echo "CG_API_KEY_1=${{ secrets.CG_API_KEY_1 }}"
-            echo "CG_API_KEY_2=${{ secrets.CG_API_KEY_2 }}"
-            echo "CG_API_KEY_3=${{ secrets.CG_API_KEY_3 }}"
-            echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}"
-            echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}"
-          } > .env
+          # Create .env file
+          cat > .env << EOL
+          CG_API_KEY_1=${{ secrets.CG_API_KEY_1 }}
+          CG_API_KEY_2=${{ secrets.CG_API_KEY_2 }}
+          CG_API_KEY_3=${{ secrets.CG_API_KEY_3 }}
+          TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
+          RUNNING_IN_DOCKER=true
+          EOL
 
-      # Build and run Docker container
-      - name: Build and run Docker container
-        run: |
-          docker build -t ${{ env.DOCKER_IMAGE }} \
-            --cache-from type=local,src=/tmp/.buildx-cache \
-            --cache-to type=local,dest=/tmp/.buildx-cache-new \
-            .
+      # Build Docker image with proper caching
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
+      - name: Build and run container
+        run: |
+          # Build with proper caching
+          DOCKER_BUILDKIT=1 docker build \
+            --build-arg BUILDKIT_INLINE_CACHE=1 \
+            --cache-from=type=gha \
+            --cache-to=type=gha,mode=max \
+            -t crypto-signals .
+
+          # Run with proper volume mounts and environment
           docker run --rm \
             -v ${{ github.workspace }}/saved_data:/app/saved_data \
             -v ${{ github.workspace }}/historical_data:/app/historical_data \
             -v ${{ github.workspace }}/logs:/app/logs \
             --env-file .env \
-            ${{ env.DOCKER_IMAGE }}
+            crypto-signals
 
-      # Optimize cache
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
-      # Commit and push changes if any
+      # Commit changes with error handling
       - name: Commit changes
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add saved_data historical_data logs
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update data files" && git push)
+          if [ -n "$(git status --porcelain saved_data historical_data logs)" ]; then
+            git config --local user.email "github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            git add saved_data historical_data logs
+            git commit -m "Auto update data files [skip ci]"
+            git push || {
+              echo "Failed to push changes"
+              exit 1
+            }
+          else
+            echo "No changes to commit"
+          fi
 
-      # Error notification
+      # Enhanced error notification
       - name: Notify on failure
         if: failure()
         run: |
-          # Send to Telegram
+          ERROR_MESSAGE="❌ Crypto Signals workflow failed!
+
+          Repository: ${{ github.repository }}
+          Workflow: ${{ github.workflow }}
+          Run: #${{ github.run_number }}
+          Commit: ${{ github.sha }}
+
+          Error Details: Check https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
           curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
             -H "Content-Type: application/json" \
-            -d "{\"chat_id\":\"${{ secrets.TELEGRAM_CHAT_ID }}\",\"text\":\"❌ GitHub Actions workflow failed!\n\nRepository: ${{ github.repository }}\nWorkflow: ${{ github.workflow }}\nRun: ${{ github.run_id }}\n\nSee details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
-
-          # Create GitHub issue
-          gh issue create \
-            --title "🚨 Workflow Failed: ${{ github.workflow }}" \
-            --body "Workflow run failed on $(date)\n\nRun ID: ${{ github.run_id }}\nSee details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            --label "bug" --label "automation"
+            -d "{\"chat_id\":\"${{ secrets.TELEGRAM_CHAT_ID }}\",\"text\":\"$ERROR_MESSAGE\",\"parse_mode\":\"Markdown\"}"
