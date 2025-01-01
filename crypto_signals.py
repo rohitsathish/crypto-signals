@@ -26,25 +26,25 @@ from scipy.signal import find_peaks
 
 # -- Modal Setup --
 
-MODAL_DATA_DIR = "/root/saved_data"
-MODAL_HISTORICAL_DIR = "/root/historical_data"
-MODAL_LOGS_DIR = "/root/logs"
+# MODAL_DATA_DIR = "/root/saved_data"
+# MODAL_HISTORICAL_DIR = "/root/historical_data"
+# MODAL_LOGS_DIR = "/root/logs"
 
-# Modal configuration
-modal_image = modal.Image.debian_slim(python_version="3.12").pip_install_from_requirements("requirements.txt")
+# # Modal configuration
+# modal_image = modal.Image.debian_slim(python_version="3.12").pip_install_from_requirements("requirements.txt")
 
-# Define Modal mounts with appropriate paths
-saved_data_mount = modal.Mount.from_local_dir(LOCAL_DATA_DIR, remote_path=MODAL_DATA_DIR)
-historical_data_mount = modal.Mount.from_local_dir(LOCAL_HISTORICAL_DIR, remote_path=MODAL_HISTORICAL_DIR)
-logs_mount = modal.Mount.from_local_dir(LOCAL_LOGS_DIR, remote_path=MODAL_LOGS_DIR)
+# # Define Modal mounts with appropriate paths
+# saved_data_mount = modal.Mount.from_local_dir(LOCAL_DATA_DIR, remote_path=MODAL_DATA_DIR)
+# historical_data_mount = modal.Mount.from_local_dir(LOCAL_HISTORICAL_DIR, remote_path=MODAL_HISTORICAL_DIR)
+# logs_mount = modal.Mount.from_local_dir(LOCAL_LOGS_DIR, remote_path=MODAL_LOGS_DIR)
 
-# Configure Modal app with mounts
-app = modal.App(
-    "crypto-signals",
-    image=modal_image,
-    secrets=[modal.Secret.from_dotenv(".env")],
-    mounts=[saved_data_mount, historical_data_mount, logs_mount],
-)
+# # Configure Modal app with mounts
+# app = modal.App(
+#     "crypto-signals",
+#     image=modal_image,
+#     secrets=[modal.Secret.from_dotenv(".env")],
+#     mounts=[saved_data_mount, historical_data_mount, logs_mount],
+# )
 
 # %%
 
