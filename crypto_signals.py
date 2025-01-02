@@ -50,55 +50,48 @@ import pytz
 
 # -- Setup --
 
+# -- Options --
+
 pd.options.mode.chained_assignment = None  # default is 'warn'
 
-if not load_dotenv(".env"):
-    logging.error(f"Failed to load .env file from")
-    raise RuntimeError(f"Failed to load .env file from")
-logging.info(f"Successfully loaded .env file from")
+# -- Environment --
 
-env_path = Path('.env')
-load_dotenv(env_path)
-print(os.getenv("RUNNING_IN_DOCKER"), os.getenv("RUNNING_IN_MODAL"), os.getenv("TELEGRAM_BOT_TOKEN"))
+if os.getenv("GITHUB_ACTIONS") == "true":
+    logging.info("Script is running in GitHub Actions.")
 
-# Base directories for different environments
-LOCAL_DATA_DIR = "./saved_data"
-LOCAL_HISTORICAL_DIR = "./historical_data"
-LOCAL_LOGS_DIR = "./logs"
+    BASE_DATA_DIR = "/app/saved_data"
+    BASE_HISTORICAL_DIR = "/app/historical_data"
+    BASE_LOGS_DIR = "/app/logs"
 
-DOCKER_DATA_DIR = "/app/saved_data"
-DOCKER_HISTORICAL_DIR = "/app/historical_data"
-DOCKER_LOGS_DIR = "/app/logs"
-
-# Check environment
-# RUNNING_IN_MODAL = os.getenv("RUNNING_IN_MODAL") == "true"
-RUNNING_IN_DOCKER = os.getenv("RUNNING_IN_DOCKER") == "true"
-
-# Dynamically set the base directories based on environment
-# if RUNNING_IN_MODAL:
-#     BASE_DATA_DIR = MODAL_DATA_DIR
-#     BASE_HISTORICAL_DIR = MODAL_HISTORICAL_DIR
-#     BASE_LOGS_DIR = MODAL_LOGS_DIR
-if RUNNING_IN_DOCKER:
-    BASE_DATA_DIR = DOCKER_DATA_DIR
-    BASE_HISTORICAL_DIR = DOCKER_HISTORICAL_DIR
-    BASE_LOGS_DIR = DOCKER_LOGS_DIR
 else:
-    BASE_DATA_DIR = LOCAL_DATA_DIR
-    BASE_HISTORICAL_DIR = LOCAL_HISTORICAL_DIR
-    BASE_LOGS_DIR = LOCAL_LOGS_DIR
+    logging.info("Script is running in a local environment.")
 
-print(BASE_DATA_DIR, RUNNING_IN_DOCKER)
+    BASE_DATA_DIR = "./saved_data"
+    BASE_HISTORICAL_DIR = "./historical_data"
+    BASE_LOGS_DIR = "./logs"
 
-# Ensure directories exist
-for directory in [BASE_DATA_DIR, BASE_HISTORICAL_DIR, BASE_LOGS_DIR]:
-    os.makedirs(directory, exist_ok=True)
+    load_dotenv(".env")
 
+# -- Global Variables --
+
+# Configuration
+API_KEYS = [os.getenv("CG_API_KEY_1"), os.getenv("CG_API_KEY_2"), os.getenv("CG_API_KEY_3")]
+
+# Token tracking settings
+TRACKED_TOKENS = {
+    "near": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
+    "oasis-network": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
+    "ix-swap": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
+    "empyreal": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
+    "maple": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
+    "clearpool": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
+    "simmi-token": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
+    "ondo-finance": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
+}
 
 # %%
 
 # -- Logging --
-
 
 def setup_logging():
     """Configure the logging system"""
@@ -142,24 +135,53 @@ def setup_logging():
 # Initialize loggers
 loggers = setup_logging()
 
-# %%
 
-# -- Global Variables --
+#%%
 
-# Configuration
-API_KEYS = [os.getenv("CG_API_KEY_1"), os.getenv("CG_API_KEY_2"), os.getenv("CG_API_KEY_3")]
 
-# Token tracking settings
-TRACKED_TOKENS = {
-    "near": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
-    "oasis-network": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
-    "ix-swap": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
-    "empyreal": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
-    "maple": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
-    "clearpool": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
-    "simmi-token": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
-    "ondo-finance": {"track_buy": False, "track_sell": True, "peak_limit": 0.99},
-}
+# if not load_dotenv(".env"):
+#     logging.error(f"Failed to load .env file from")
+#     raise RuntimeError(f"Failed to load .env file from")
+# logging.info(f"Successfully loaded .env file from")
+
+# env_path = Path('.env')
+# load_dotenv(env_path)
+# print(os.getenv("RUNNING_IN_DOCKER"), os.getenv("RUNNING_IN_MODAL"), os.getenv("TELEGRAM_BOT_TOKEN"))
+
+# # Base directories for different environments
+# LOCAL_DATA_DIR = "./saved_data"
+# LOCAL_HISTORICAL_DIR = "./historical_data"
+# LOCAL_LOGS_DIR = "./logs"
+
+# DOCKER_DATA_DIR = "/app/saved_data"
+# DOCKER_HISTORICAL_DIR = "/app/historical_data"
+# DOCKER_LOGS_DIR = "/app/logs"
+
+# # Check environment
+# # RUNNING_IN_MODAL = os.getenv("RUNNING_IN_MODAL") == "true"
+# RUNNING_IN_DOCKER = os.getenv("RUNNING_IN_DOCKER") == "true"
+
+# # Dynamically set the base directories based on environment
+# # if RUNNING_IN_MODAL:
+# #     BASE_DATA_DIR = MODAL_DATA_DIR
+# #     BASE_HISTORICAL_DIR = MODAL_HISTORICAL_DIR
+# #     BASE_LOGS_DIR = MODAL_LOGS_DIR
+# if RUNNING_IN_DOCKER:
+#     BASE_DATA_DIR = DOCKER_DATA_DIR
+#     BASE_HISTORICAL_DIR = DOCKER_HISTORICAL_DIR
+#     BASE_LOGS_DIR = DOCKER_LOGS_DIR
+# else:
+#     BASE_DATA_DIR = LOCAL_DATA_DIR
+#     BASE_HISTORICAL_DIR = LOCAL_HISTORICAL_DIR
+#     BASE_LOGS_DIR = LOCAL_LOGS_DIR
+
+# print(BASE_DATA_DIR, RUNNING_IN_DOCKER)
+
+# # Ensure directories exist
+# for directory in [BASE_DATA_DIR, BASE_HISTORICAL_DIR, BASE_LOGS_DIR]:
+#     os.makedirs(directory, exist_ok=True)
+
+
 
 # %%
 
