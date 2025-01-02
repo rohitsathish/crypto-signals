@@ -47,3 +47,9 @@ A simple system for generating cryptocurrency trading signals based on technical
    ```bash
    pip install -r requirements.txt
    ```
+
+4. Run the script:
+   ```bash
+   python crypto_signals.py
+   ```
+
