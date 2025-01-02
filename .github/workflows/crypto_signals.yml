@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '35,50 * * * *'  # Run at 35th and 50th minute of every hour
+    - cron: '40 * * * *'  # Run at 40th minute of every hour
 
 jobs:
   process-signals:

@@ -563,6 +563,32 @@ class CryptoDataManager:
                 self.logger.error(f"Failed to update {token}")
 
         self.save_data()
+        self._log_fetch_status(tokens)
+
+    def _log_fetch_status(self, tokens):
+        """Log the fetch status of tokens for the most recent hour."""
+        if self.main_df.empty:
+            self.logger.warning("No data available to check fetch status.")
+            return
+
+        last_row = self.main_df.iloc[-1]
+
+        # Check which tokens have data in the last row
+        present_tokens = []
+        missing_tokens = []
+        for token in tokens:
+            if pd.notna(last_row[f'{token}_price']):
+                present_tokens.append(token)
+            else:
+                missing_tokens.append(token)
+
+        missing_str = ', '.join(missing_tokens) if missing_tokens else 'None'
+
+        self.logger.info(
+            f"{len(present_tokens)}/{len(tokens)} are present for the most recent hour, "
+            f"{missing_str} are not present in the most recent hour"
+        )
+
 
 
 # manager = CryptoDataManager()
