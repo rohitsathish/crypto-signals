@@ -330,7 +330,7 @@ def api_rate_limit_call(url, cg=True, max_retries=5, *args, **kwargs):
     if not hasattr(api_rate_limit_call, "rotator"):
         api_rate_limit_call.rotator = KeyRotator(API_KEYS)
 
-    retry_delay = 5.1  # Initial delay in seconds
+    retry_delay = 10.1  # Initial delay in seconds
     for attempt in range(max_retries):
         # Try up to max_retries cycles
         for cycle in range(len(API_KEYS)):
@@ -366,7 +366,7 @@ def api_rate_limit_call(url, cg=True, max_retries=5, *args, **kwargs):
 
         # If all keys are rate limited, wait before retrying
         time.sleep(retry_delay)
-        retry_delay *= 1.5  # Exponential backoff
+        retry_delay = min(retry_delay * 2, 60)  # Exponential backoff capped at 60s
         logger.info(f"All keys exhausted. Waiting {retry_delay}s before next attempt")
 
     # After max_retries attempts, raise error
