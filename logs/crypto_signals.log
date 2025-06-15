@@ -34292,3 +34292,64 @@ Processing ondo-finance...
 [2025-06-15 06:53:04 UTC] [INFO] [crypto_signals.data] [process_new_data] - Portfolio signals updated in 0.03s
 [2025-06-15 06:53:04 UTC] [INFO] [crypto_signals.data] [process_new_data] - Data processing complete and saved
 [2025-06-15 06:53:04 UTC] [INFO] [crypto_signals.system] [main] - Indicator processing complete
+[2025-06-15 07:43:35 UTC] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2025-06-15 07:43:35 UTC] [INFO] [crypto_signals.data] [remove_columns] - Removed columns: []
+[2025-06-15 07:43:35 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing near...
+[2025-06-15 07:43:35 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token near
+[2025-06-15 07:43:35 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for near from 2025-06-12 08:00:00 to 2025-06-15 08:00:00 (3 days)
+[2025-06-15 07:43:35 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for near (72 days)
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated near
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing oasis-network...
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token oasis-network
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for oasis-network from 2025-06-12 08:00:00 to 2025-06-15 08:00:00 (3 days)
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for oasis-network (72 days)
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated oasis-network
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing ix-swap...
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token ix-swap
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for ix-swap from 2025-06-12 08:00:00 to 2025-06-15 08:00:00 (3 days)
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for ix-swap (72 days)
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated ix-swap
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing empyreal...
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token empyreal
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for empyreal from 2025-06-12 08:00:00 to 2025-06-15 08:00:00 (3 days)
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for empyreal (72 days)
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated empyreal
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing maple...
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token maple
+[2025-06-15 07:43:36 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for maple from 2025-06-12 08:00:00 to 2025-06-15 08:00:00 (3 days)
+[2025-06-15 07:43:37 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for maple (72 days)
+[2025-06-15 07:43:37 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated maple
+[2025-06-15 07:43:37 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing clearpool...
+[2025-06-15 07:43:37 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token clearpool
+[2025-06-15 07:43:37 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for clearpool from 2025-06-12 08:00:00 to 2025-06-15 08:00:00 (3 days)
+[2025-06-15 07:43:47 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 20.2s before next attempt
+[2025-06-15 07:44:08 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 40.4s before next attempt
+[2025-06-15 07:44:08 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for clearpool (72 days)
+[2025-06-15 07:44:08 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated clearpool
+[2025-06-15 07:44:08 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing simmi-token...
+[2025-06-15 07:44:08 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token simmi-token
+[2025-06-15 07:44:08 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for simmi-token from 2025-06-12 08:00:00 to 2025-06-15 08:00:00 (3 days)
+[2025-06-15 07:44:08 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for simmi-token (72 days)
+[2025-06-15 07:44:08 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated simmi-token
+[2025-06-15 07:44:08 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing ondo-finance...
+[2025-06-15 07:44:08 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token ondo-finance
+[2025-06-15 07:44:08 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for ondo-finance from 2025-06-12 08:00:00 to 2025-06-15 08:00:00 (3 days)
+[2025-06-15 07:44:08 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for ondo-finance (72 days)
+[2025-06-15 07:44:08 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated ondo-finance
+[2025-06-15 07:44:09 UTC] [INFO] [crypto_signals.data] [_log_fetch_status] - 8/8 are present for the most recent hour, None are not present in the most recent hour
+[2025-06-15 07:44:09 UTC] [INFO] [crypto_signals.system] [main] - Token data updated
+[2025-06-15 07:44:09 UTC] [INFO] [crypto_signals.system] [main] - Token price validation complete
+[2025-06-15 07:44:09 UTC] [INFO] [crypto_signals.system] [main] - Price alerts processed
+[2025-06-15 07:44:10 UTC] [INFO] [crypto_signals.data] [process_new_data] - Expanding indicators updated in 0.01s
+[2025-06-15 07:44:10 UTC] [INFO] [crypto_signals.data] [process_new_data] - Rolling indicators updated in 0.21s
+[2025-06-15 07:44:10 UTC] [INFO] [crypto_signals.data] [process_new_data] - Portfolio signals updated in 0.03s
+[2025-06-15 07:44:11 UTC] [INFO] [crypto_signals.data] [process_new_data] - Data processing complete and saved
+[2025-06-15 07:44:11 UTC] [INFO] [crypto_signals.system] [main] - Indicator processing complete
