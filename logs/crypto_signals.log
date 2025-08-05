@@ -4724,3 +4724,103 @@ Processing ondo-finance...
 [2025-08-05 02:55:31 UTC] [INFO] [crypto_signals.data] [process_new_data] - Portfolio signals updated in 0.03s
 [2025-08-05 02:55:32 UTC] [INFO] [crypto_signals.data] [process_new_data] - Data processing complete and saved
 [2025-08-05 02:55:32 UTC] [INFO] [crypto_signals.system] [main] - Indicator processing complete
+[2025-08-05 04:36:10 UTC] [INFO] [crypto_signals.system] [main] - Starting crypto signals processing
+[2025-08-05 04:36:11 UTC] [INFO] [crypto_signals.data] [remove_columns] - Removed columns: []
+[2025-08-05 04:36:11 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing near...
+[2025-08-05 04:36:11 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token near
+[2025-08-05 04:36:11 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for near from 2025-08-02 05:00:00 to 2025-08-05 05:00:00 (3 days)
+[2025-08-05 04:36:11 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-qxUteJHaiM51BWKnBtvEjx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2025-08-05 04:36:11 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-bip4MXKuvNMUitCdxFXxHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2025-08-05 04:36:12 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-sKBsqx3LsFzik9j8Nj5hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/near/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2025-08-05 04:36:23 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 20.2s before next attempt
+[2025-08-05 04:36:23 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for near (72 days)
+[2025-08-05 04:36:23 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated near
+[2025-08-05 04:36:23 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing oasis-network...
+[2025-08-05 04:36:23 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token oasis-network
+[2025-08-05 04:36:23 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for oasis-network from 2025-08-02 05:00:00 to 2025-08-05 05:00:00 (3 days)
+[2025-08-05 04:36:23 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-bip4MXKuvNMUitCdxFXxHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/oasis-network/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2025-08-05 04:36:34 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 20.2s before next attempt
+[2025-08-05 04:36:34 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for oasis-network (72 days)
+[2025-08-05 04:36:34 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated oasis-network
+[2025-08-05 04:36:34 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing ix-swap...
+[2025-08-05 04:36:34 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token ix-swap
+[2025-08-05 04:36:34 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for ix-swap from 2025-08-02 05:00:00 to 2025-08-05 05:00:00 (3 days)
+[2025-08-05 04:36:44 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 20.2s before next attempt
+[2025-08-05 04:37:05 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 40.4s before next attempt
+[2025-08-05 04:37:05 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-sKBsqx3LsFzik9j8Nj5hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/ix-swap/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2025-08-05 04:37:05 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-qxUteJHaiM51BWKnBtvEjx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/ix-swap/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2025-08-05 04:37:06 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-bip4MXKuvNMUitCdxFXxHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/ix-swap/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2025-08-05 04:37:47 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 60s before next attempt
+[2025-08-05 04:37:47 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-sKBsqx3LsFzik9j8Nj5hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/ix-swap/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2025-08-05 04:37:48 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for ix-swap (72 days)
+[2025-08-05 04:37:48 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated ix-swap
+[2025-08-05 04:37:48 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing empyreal...
+[2025-08-05 04:37:48 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token empyreal
+[2025-08-05 04:37:48 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for empyreal from 2025-08-02 05:00:00 to 2025-08-05 05:00:00 (3 days)
+[2025-08-05 04:37:58 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 20.2s before next attempt
+[2025-08-05 04:38:18 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 40.4s before next attempt
+[2025-08-05 04:38:18 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-bip4MXKuvNMUitCdxFXxHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/empyreal/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2025-08-05 04:38:19 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-sKBsqx3LsFzik9j8Nj5hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/empyreal/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2025-08-05 04:38:20 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-qxUteJHaiM51BWKnBtvEjx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/empyreal/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2025-08-05 04:39:01 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 60s before next attempt
+[2025-08-05 04:39:01 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-bip4MXKuvNMUitCdxFXxHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/empyreal/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2025-08-05 04:39:01 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-sKBsqx3LsFzik9j8Nj5hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/empyreal/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2025-08-05 04:39:02 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for empyreal (72 days)
+[2025-08-05 04:39:02 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated empyreal
+[2025-08-05 04:39:02 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing maple...
+[2025-08-05 04:39:02 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token maple
+[2025-08-05 04:39:02 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for maple from 2025-08-02 05:00:00 to 2025-08-05 05:00:00 (3 days)
+[2025-08-05 04:39:02 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-bip4MXKuvNMUitCdxFXxHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/maple/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2025-08-05 04:39:03 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-sKBsqx3LsFzik9j8Nj5hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/maple/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2025-08-05 04:39:14 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 20.2s before next attempt
+[2025-08-05 04:39:34 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 40.4s before next attempt
+[2025-08-05 04:40:15 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 60s before next attempt
+[2025-08-05 04:40:15 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for maple (72 days)
+[2025-08-05 04:40:15 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated maple
+[2025-08-05 04:40:15 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing clearpool...
+[2025-08-05 04:40:15 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token clearpool
+[2025-08-05 04:40:15 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for clearpool from 2025-08-02 05:00:00 to 2025-08-05 05:00:00 (3 days)
+[2025-08-05 04:40:15 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-sKBsqx3LsFzik9j8Nj5hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/clearpool/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2025-08-05 04:40:16 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-qxUteJHaiM51BWKnBtvEjx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/clearpool/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2025-08-05 04:40:16 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-bip4MXKuvNMUitCdxFXxHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/clearpool/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2025-08-05 04:40:27 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 20.2s before next attempt
+[2025-08-05 04:40:27 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-sKBsqx3LsFzik9j8Nj5hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/clearpool/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2025-08-05 04:40:28 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for clearpool (72 days)
+[2025-08-05 04:40:28 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated clearpool
+[2025-08-05 04:40:28 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing simmi-token...
+[2025-08-05 04:40:28 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token simmi-token
+[2025-08-05 04:40:28 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for simmi-token from 2025-08-02 05:00:00 to 2025-08-05 05:00:00 (3 days)
+[2025-08-05 04:40:38 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 20.2s before next attempt
+[2025-08-05 04:40:58 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 40.4s before next attempt
+[2025-08-05 04:41:39 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 60s before next attempt
+[2025-08-05 04:41:39 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-sKBsqx3LsFzik9j8Nj5hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/simmi-token/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2025-08-05 04:41:40 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-qxUteJHaiM51BWKnBtvEjx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/simmi-token/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2025-08-05 04:41:40 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-bip4MXKuvNMUitCdxFXxHh5X: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/simmi-token/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-bip4MXKuvNMUitCdxFXxHh5X
+[2025-08-05 04:42:41 UTC] [INFO] [crypto_signals.api] [api_rate_limit_call] - All keys exhausted. Waiting 60s before next attempt
+[2025-08-05 04:42:41 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-sKBsqx3LsFzik9j8Nj5hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/simmi-token/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2025-08-05 04:42:42 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-qxUteJHaiM51BWKnBtvEjx4T: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/simmi-token/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-qxUteJHaiM51BWKnBtvEjx4T
+[2025-08-05 04:42:42 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for simmi-token (72 days)
+[2025-08-05 04:42:42 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated simmi-token
+[2025-08-05 04:42:42 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - 
+Processing ondo-finance...
+[2025-08-05 04:42:42 UTC] [INFO] [crypto_signals.data] [update_token_data] - Previous data detected for token ondo-finance
+[2025-08-05 04:42:42 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Starting data fetch for ondo-finance from 2025-08-02 05:00:00 to 2025-08-05 05:00:00 (3 days)
+[2025-08-05 04:42:43 UTC] [ERROR] [crypto_signals.api] [api_rate_limit_call] - API request failed with key CG-sKBsqx3LsFzik9j8Nj5hLkUj: 400 Client Error: Bad Request for url: https://api.coingecko.com/api/v3/coins/ondo-finance/market_chart/range?vs_currency=usd&from=1754110800&to=1754370000?x_cg_demo_api_key=CG-sKBsqx3LsFzik9j8Nj5hLkUj
+[2025-08-05 04:42:43 UTC] [INFO] [crypto_signals.data] [fetch_hourly_data] - Completed data fetch for ondo-finance (72 days)
+[2025-08-05 04:42:43 UTC] [INFO] [crypto_signals.data] [update_multiple_tokens] - Successfully updated ondo-finance
+[2025-08-05 04:42:44 UTC] [INFO] [crypto_signals.data] [_log_fetch_status] - 8/8 are present for the most recent hour, None are not present in the most recent hour
+[2025-08-05 04:42:44 UTC] [INFO] [crypto_signals.system] [main] - Token data updated
+[2025-08-05 04:42:44 UTC] [INFO] [crypto_signals.system] [main] - Token price validation complete
+[2025-08-05 04:42:44 UTC] [INFO] [crypto_signals.system] [main] - Price alerts processed
+[2025-08-05 04:42:45 UTC] [INFO] [crypto_signals.data] [process_new_data] - Expanding indicators updated in 0.01s
+[2025-08-05 04:42:45 UTC] [INFO] [crypto_signals.data] [process_new_data] - Rolling indicators updated in 0.21s
+[2025-08-05 04:42:45 UTC] [INFO] [crypto_signals.data] [process_new_data] - Portfolio signals updated in 0.03s
+[2025-08-05 04:42:46 UTC] [INFO] [crypto_signals.data] [process_new_data] - Data processing complete and saved
+[2025-08-05 04:42:46 UTC] [INFO] [crypto_signals.system] [main] - Indicator processing complete
